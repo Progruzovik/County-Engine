@@ -37,13 +37,12 @@ void Button::setSize(float width, float height)
 {
     size.x = width;
     size.y = height;
-    ce::RectangleNode::setSize(width * ce::Parameters::get().getK(), height * ce::Parameters::get().getK());
-    text->setPos(getCenterX(), getCenterY());
+    updateSize();
 }
 
 void Button::resize()
 {
-    ce::RectangleNode::setSize(size.x * ce::Parameters::get().getK(), size.y * ce::Parameters::get().getK());
+    updateSize();
     text->resize();
     text->setOrigin(text->getCenterX(), text->getCenterY());
 }
@@ -83,6 +82,12 @@ void Button::setState(State state)
     } else if (state == State::MOUSE_PRESSED) {
         shape.setFillColor(sf::Color::Black);
     }
+}
+
+void Button::updateSize()
+{
+    ce::RectangleNode::setSize(size.x * ce::Parameters::get().getK(), size.y * ce::Parameters::get().getK());
+    text->setPos(getCenterX(), getCenterY());
 }
 
 }

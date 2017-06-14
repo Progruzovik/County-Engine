@@ -28,6 +28,7 @@ protected:
 
 private:
     enum class State { DEFAULT, MOUSE_OVER, MOUSE_PRESSED, DISABLED };
+    void updateSize();
 
     Text *text;
     sf::Vector2f size;
