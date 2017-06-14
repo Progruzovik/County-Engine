@@ -9,6 +9,8 @@ void Text::loadFont(const std::string &filename)
     font.loadFromFile(filename);
 }
 
+sf::Font Text::font = sf::Font();
+
 Text::Text(const sf::String &string, sf::Uint32 characterSize, const sf::Color &color)
     : characterSize(characterSize), text(sf::Text(string, font, characterSize * ce::Parameters::get().getK()))
 {

@@ -11,6 +11,7 @@ class Text : public ce::AbstractVisualNode
 {
 public:
     static constexpr unsigned int CHRACTER_SIZE = 18;
+    static void loadFont(const std::string &filename);
 
     Text(const sf::String &string = "", unsigned int characterSize = CHRACTER_SIZE,
          const sf::Color &color = sf::Color::Black);
@@ -35,7 +36,6 @@ public:
 
 private:
     static sf::Font font;
-    void loadFont(const std::string &filename);
 
     unsigned int characterSize;
     sf::Text text;
