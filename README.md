@@ -4,6 +4,6 @@ Light 2D game engine based on SFML.
 It provides:
 * Main game loop
 * Scene graph
-* Independent game screens with content and ui layers
+* Game screens with separated content and UI layers
 * Event system
 * Basic UI components
