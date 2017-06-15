@@ -19,7 +19,6 @@ public:
 
     const sf::Color &getBgColor() const;
 
-    virtual void resizeUi() = 0;
     virtual void setUpNodes();
     void update();
 
@@ -27,11 +26,13 @@ protected:
     sf::Color bgColor;
 
     void setContent(AbstractNode *value);
-    void removeContent();
     void setLeftUi(AbstractNode *value);
     void setRightUi(AbstractNode *value);
     void setTopUi(AbstractNode *value);
     void setBottomUi(AbstractNode *value);
+
+    void removeContent();
+    virtual void resizeUi() = 0;
 
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;

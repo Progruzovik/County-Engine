@@ -77,6 +77,7 @@ void AbstractAct::setUpNodes()
 
 void AbstractAct::update()
 {
+    resizeUi();
     root->update();
     sf::Vector2i currentMousePosition = root->select();
     if (isContentMovable && root->checkMouseOnIt(currentMousePosition) && content) {
@@ -116,14 +117,6 @@ void AbstractAct::setContent(AbstractNode *value)
     setUpNodes();
 }
 
-void AbstractAct::removeContent()
-{
-    if (content) {
-        root->removeContent(content);
-        content = nullptr;
-    }
-}
-
 void AbstractAct::setLeftUi(AbstractNode *value)
 {
     updateUi(leftUi, value);
@@ -150,6 +143,14 @@ void AbstractAct::setBottomUi(AbstractNode *value)
     updateUi(bottomUi, value);
     bottomUi = value;
     setUpNodes();
+}
+
+void AbstractAct::removeContent()
+{
+    if (content) {
+        root->removeContent(content);
+        content = nullptr;
+    }
 }
 
 void AbstractAct::updateUi(AbstractNode *oldUi, AbstractNode *newUi)

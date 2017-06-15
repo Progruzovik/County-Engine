@@ -64,7 +64,6 @@ void Stage::update()
 
 void Stage::updateView()
 {
-    currentAct->resizeUi();
     currentAct->setUpNodes();
     setView(view);
 }
