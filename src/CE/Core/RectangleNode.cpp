@@ -4,7 +4,7 @@
 namespace ce {
 
 RectangleNode::RectangleNode(float width, float height, const sf::Color &color,
-                             bool isSelectable, bool isUpdatable, ce::Listener *listener)
+                             bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractVisualNode(isSelectable, isUpdatable, listener),
       shape(sf::RectangleShape(sf::Vector2f(width, height)))
 {
@@ -45,7 +45,7 @@ void RectangleNode::setScale(float scale)
 
 void RectangleNode::setRotation(float value)
 {
-    shape.setRotation(value * 180 / ce::MATH_PI);
+    shape.setRotation(value * 180 / MATH_PI);
     makeTransformed();
 }
 
@@ -73,13 +73,13 @@ void RectangleNode::setPos(float x, float y)
 
 void RectangleNode::rotate(float angle)
 {
-    shape.rotate(angle * 180 / ce::MATH_PI);
+    shape.rotate(angle * 180 / MATH_PI);
     makeTransformed();
 }
 
-void RectangleNode::move(float moveX, float moveY)
+void RectangleNode::move(float offsetX, float offsetY)
 {
-    shape.move(moveX, moveY);
+    shape.move(offsetX, offsetY);
     makeTransformed();
 }
 

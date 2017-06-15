@@ -3,8 +3,7 @@
 
 namespace ce {
 
-CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable,
-                       bool isUpdatable, ce::Listener *listener)
+CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractVisualNode(isSelectable, isUpdatable, listener), shape(sf::CircleShape(radius))
 {
     shape.setOrigin(radius, radius);
@@ -67,9 +66,9 @@ void CircleNode::rotate(float angle)
     makeTransformed();
 }
 
-void CircleNode::move(float moveX, float moveY)
+void CircleNode::move(float offsetX, float offsetY)
 {
-    shape.move(moveX, moveY);
+    shape.move(offsetX, offsetY);
     makeTransformed();
 }
 

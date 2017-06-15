@@ -12,7 +12,7 @@ void Text::loadFont(const std::string &filename)
 sf::Font Text::font = sf::Font();
 
 Text::Text(const sf::String &string, sf::Uint32 characterSize, const sf::Color &color)
-    : characterSize(characterSize), text(sf::Text(string, font, characterSize * ce::Parameters::get().getK()))
+    : characterSize(characterSize), text(sf::Text(string, font, characterSize * Parameters::get().getK()))
 {
     text.setFillColor(color);
 }
@@ -51,7 +51,7 @@ void Text::setScale(float value)
 
 void Text::setRotation(float value)
 {
-    text.setRotation(value * 180 / ce::MATH_PI);
+    text.setRotation(value * 180 / MATH_PI);
     makeTransformed();
 }
 
@@ -74,19 +74,19 @@ void Text::setPos(float x, float y)
 
 void Text::rotate(float angle)
 {
-    text.rotate(angle * 180 / ce::MATH_PI);
+    text.rotate(angle * 180 / MATH_PI);
     makeTransformed();
 }
 
-void Text::move(float moveX, float moveY)
+void Text::move(float offsetX, float offsetY)
 {
-    text.move(std::round(moveX), std::round(moveY));
+    text.move(std::round(offsetX), std::round(offsetY));
     makeTransformed();
 }
 
 void Text::resize()
 {
-    text.setCharacterSize(characterSize * ce::Parameters::get().getK());
+    text.setCharacterSize(characterSize * Parameters::get().getK());
 }
 
 const sf::Transformable &Text::getTransformable() const

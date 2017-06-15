@@ -5,7 +5,7 @@
 
 namespace ce {
 
-class ProgressBar final : public ce::RectangleNode
+class ProgressBar final : public RectangleNode
 {
 public:
     ProgressBar(float width, float height, const sf::Color &color = sf::Color::Black,

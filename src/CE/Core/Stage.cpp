@@ -37,7 +37,7 @@ void Stage::update()
     sf::Event event;
     while (pollEvent(event)) {
         if (event.type == sf::Event::Resized) {
-            ce::Parameters::get().update(event.size.width, event.size.height);
+            Parameters::get().update(event.size.width, event.size.height);
             view.reset(sf::FloatRect(0, 0, event.size.width, event.size.height));
             updateView();
         } else if (event.type == sf::Event::MouseButtonPressed) {

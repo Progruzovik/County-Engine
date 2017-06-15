@@ -8,7 +8,7 @@ namespace ce {
 
 class AbstractAct;
 
-class Stage : public sf::RenderWindow, public ce::Listener
+class Stage : public sf::RenderWindow, public Listener
 {
 public:
     Stage(const sf::VideoMode &mode, const sf::String &title, AbstractAct *currentAct);
@@ -16,7 +16,7 @@ public:
 
     sf::View &getMutableView();
 
-    void onEvent(ce::Speaker *, const sf::String &) override {}
+    void onEvent(Speaker *, const sf::String &) override {}
     void start();
 
 protected:

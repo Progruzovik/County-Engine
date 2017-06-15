@@ -3,7 +3,7 @@
 
 namespace ce {
 
-MimicNode::MimicNode(bool isSelectable, bool isUpdatable, ce::Listener *listener)
+MimicNode::MimicNode(bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractNode(isSelectable, isUpdatable, listener) {}
 
 float MimicNode::getWidth()
@@ -38,7 +38,7 @@ void MimicNode::setScale(float value)
 
 void MimicNode::setRotation(float value)
 {
-    transformable.setRotation(value * 180 / ce::MATH_PI);
+    transformable.setRotation(value * 180 / MATH_PI);
     makeTransformed();
 }
 
@@ -61,13 +61,13 @@ void MimicNode::setPos(float x, float y)
 
 void MimicNode::rotate(float angle)
 {
-    transformable.rotate(angle * 180 / ce::MATH_PI);
+    transformable.rotate(angle * 180 / MATH_PI);
     makeTransformed();
 }
 
-void MimicNode::move(float moveX, float moveY)
+void MimicNode::move(float offsetX, float offsetY)
 {
-    transformable.move(moveX, moveY);
+    transformable.move(offsetX, offsetY);
     makeTransformed();
 }
 

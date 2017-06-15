@@ -7,7 +7,7 @@
 
 namespace ce {
 
-class Text : public ce::AbstractVisualNode
+class Text : public AbstractVisualNode
 {
 public:
     static constexpr unsigned int CHRACTER_SIZE = 18;
@@ -30,7 +30,7 @@ public:
     void setOrigin(float x, float y) override;
     void setPos(float x, float y) override;
     void rotate(float angle) override;
-    void move(float moveX, float moveY) override;
+    void move(float offsetX, float offsetY) override;
 
     virtual void resize();
 

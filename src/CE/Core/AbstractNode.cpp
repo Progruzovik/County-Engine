@@ -4,7 +4,7 @@
 
 namespace ce {
 
-AbstractNode::AbstractNode(bool isSelectable, bool isUpdatable, ce::Listener *listener)
+AbstractNode::AbstractNode(bool isSelectable, bool isUpdatable, Listener *listener)
     : Speaker(listener), isSelectable(isSelectable), isUpdatable(isUpdatable) {}
 
 AbstractNode::~AbstractNode()
@@ -72,9 +72,9 @@ float AbstractNode::getScale() const
 
 float AbstractNode::getRotation() const
 {
-    float rotation = getTransformable().getRotation() * ce::MATH_PI / 180;
-    if (rotation > ce::MATH_PI) {
-        rotation -= ce::MATH_PI * 2;
+    float rotation = getTransformable().getRotation() * MATH_PI / 180;
+    if (rotation > MATH_PI) {
+        rotation -= MATH_PI * 2;
     }
     return rotation;
 }
@@ -195,7 +195,7 @@ void AbstractNode::removeChildren(bool toDelete, unsigned long firstIndex, long 
 
 void AbstractNode::onUpdated()
 {
-    declareEvent(ce::UPDATED);
+    declareEvent(UPDATED);
 }
 
 void AbstractNode::onMouseLeft()

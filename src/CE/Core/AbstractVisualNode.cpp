@@ -2,7 +2,7 @@
 
 namespace ce {
 
-AbstractVisualNode::AbstractVisualNode(bool isSelectable, bool isUpdatable, ce::Listener *listener)
+AbstractVisualNode::AbstractVisualNode(bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractNode(isSelectable, isUpdatable, listener) {}
 
 void AbstractVisualNode::drawToTarget(sf::RenderTarget *target)

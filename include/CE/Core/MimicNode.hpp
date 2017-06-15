@@ -10,7 +10,7 @@ class MimicNode : public AbstractNode
 {
 public:
     MimicNode(bool isSelectable = false, bool isUpdatable = false,
-              ce::Listener *listener = nullptr);
+              Listener *listener = nullptr);
 
     float getWidth() override;
     float getHeight() override;
@@ -22,7 +22,7 @@ public:
     void setOrigin(float x, float y) override;
     void setPos(float x, float y) override;
     void rotate(float angle) override;
-    void move(float moveX, float moveY) override;
+    void move(float offsetX, float offsetY) override;
 
 protected:
     const sf::Transformable &getTransformable() const override;

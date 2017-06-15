@@ -8,7 +8,7 @@ namespace ce {
 class AbstractVisualNode : public AbstractNode
 {
 public:
-    AbstractVisualNode(bool isSelectable = false, bool isUpdatable = false, ce::Listener *listener = nullptr);
+    AbstractVisualNode(bool isSelectable = false, bool isUpdatable = false, Listener *listener = nullptr);
 
     virtual void setAlpha(float value) = 0;
     void drawToTarget(sf::RenderTarget *target) override;

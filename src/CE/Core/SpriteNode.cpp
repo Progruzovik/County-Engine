@@ -4,8 +4,7 @@
 
 namespace ce {
 
-SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable,
-                       bool isUpdatable, ce::Listener *listener)
+SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractVisualNode(isSelectable, isUpdatable, listener)
 {
     sprite.setTexture(texture);
@@ -35,7 +34,7 @@ void SpriteNode::setScale(float value)
 
 void SpriteNode::setRotation(float value)
 {
-    sprite.setRotation(value * 180 / ce::MATH_PI);
+    sprite.setRotation(value * 180 / MATH_PI);
     makeTransformed();
 }
 
@@ -58,13 +57,13 @@ void SpriteNode::setPos(float x, float y)
 
 void SpriteNode::rotate(float angle)
 {
-    sprite.rotate(angle * 180 / ce::MATH_PI);
+    sprite.rotate(angle * 180 / MATH_PI);
     makeTransformed();
 }
 
-void SpriteNode::move(float moveX, float moveY)
+void SpriteNode::move(float offsetX, float offsetY)
 {
-    sprite.move(moveX, moveY);
+    sprite.move(offsetX, offsetY);
     makeTransformed();
 }
 

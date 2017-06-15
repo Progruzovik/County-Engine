@@ -6,11 +6,10 @@
 
 namespace ce {
 
-class Button : public ce::RectangleNode
+class Button : public RectangleNode
 {
 public:
-    Button(ce::Listener *listener, const sf::String &string = "",
-           const sf::Vector2f &size = sf::Vector2f(165, 40));
+    Button(Listener *listener, const sf::String &string = "", const sf::Vector2f &size = sf::Vector2f(165, 40));
 
     const sf::String &getString() const;
     void setString(const sf::String &value = "");

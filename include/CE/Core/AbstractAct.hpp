@@ -8,7 +8,7 @@ namespace ce {
 
 enum class ContentMode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
 
-class AbstractAct : public ce::Speaker, public ce::Listener
+class AbstractAct : public Speaker, public Listener
 {
 public:
     AbstractAct(Stage *stage, ContentMode contentMode,

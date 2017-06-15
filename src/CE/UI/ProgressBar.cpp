@@ -40,7 +40,7 @@ void ProgressBar::setValue(float value)
 
 void ProgressBar::calculateWidth()
 {
-    ce::RectangleNode::setWidth((value - minimum) / (maximum - minimum) * maxWidth);
+    RectangleNode::setWidth((value - minimum) / (maximum - minimum) * maxWidth);
 }
 
 }

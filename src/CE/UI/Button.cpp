@@ -2,8 +2,8 @@
 
 namespace ce {
 
-Button::Button(ce::Listener *listener, const sf::String &string, const sf::Vector2f &size)
-    : RectangleNode(size.x * ce::Parameters::get().getK(), size.y * ce::Parameters::get().getK(),
+Button::Button(Listener *listener, const sf::String &string, const sf::Vector2f &size)
+    : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(),
                     sf::Color(0x333333FF), true, false, listener),
       text(new Text("", Text::CHRACTER_SIZE, sf::Color::White)), size(size)
 {
@@ -69,7 +69,7 @@ void Button::onLeftMouseButtonPressed()
 void Button::onLeftMouseButtonReleased()
 {
     setState(State::MOUSE_OVER);
-    declareEvent(ce::CLICKED);
+    declareEvent(CLICKED);
 }
 
 void Button::setState(State state)
@@ -86,7 +86,7 @@ void Button::setState(State state)
 
 void Button::updateSize()
 {
-    ce::RectangleNode::setSize(size.x * ce::Parameters::get().getK(), size.y * ce::Parameters::get().getK());
+    RectangleNode::setSize(size.x * Parameters::get().getK(), size.y * Parameters::get().getK());
     text->setPos(getCenterX(), getCenterY());
 }
 
