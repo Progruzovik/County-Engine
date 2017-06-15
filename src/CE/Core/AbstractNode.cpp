@@ -119,6 +119,16 @@ void AbstractNode::setY(float value)
     setPos(getX(), value);
 }
 
+void AbstractNode::moveX(float offset)
+{
+    move(offset, 0);
+}
+
+void AbstractNode::moveY(float offset)
+{
+    move(0, offset);
+}
+
 void AbstractNode::update()
 {
     if (isUpdatable) {

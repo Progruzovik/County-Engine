@@ -6,11 +6,13 @@
 
 namespace ce {
 
+enum class ContentMode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
+
 class AbstractAct : public ce::Speaker, public ce::Listener
 {
 public:
-    AbstractAct(Stage *stage, bool isContentMovable = false,
-                const sf::Color &bgColor = sf::Color::White);
+    AbstractAct(Stage *stage, ContentMode contentMode,
+                const sf::Color &bgColor = sf::Color::Black);
 
     void onLeftMouseButtonPressed();
     void onLeftMouseButtonReleased();
@@ -25,6 +27,7 @@ public:
 protected:
     sf::Color bgColor;
 
+    void setCenter(AbstractNode *value);
     void setContent(AbstractNode *value);
     void setLeftUi(AbstractNode *value);
     void setRightUi(AbstractNode *value);
@@ -37,12 +40,13 @@ protected:
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
 
-    bool isContentMovable;
+    ContentMode contentMode;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
     sf::Vector2u mousePosition;
 
     std::unique_ptr<RootNode> root;
+    AbstractNode *center = nullptr;
     AbstractNode *content = nullptr;
     AbstractNode *leftUi = nullptr;
     AbstractNode *rightUi = nullptr;

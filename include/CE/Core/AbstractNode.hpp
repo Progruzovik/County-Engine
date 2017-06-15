@@ -8,11 +8,11 @@
 
 namespace ce {
 
-class AbstractNode : public ce::Speaker
+class AbstractNode : public Speaker
 {
 public:
     AbstractNode(bool isSelectable = false, bool isUpdatable = false,
-                 ce::Listener *listener = nullptr);
+                 Listener *listener = nullptr);
     virtual ~AbstractNode();
 
     bool checkSelectable() const;
@@ -44,7 +44,9 @@ public:
     virtual void setOrigin(float x, float y) = 0;
     virtual void setPos(float x, float y) = 0;
     virtual void rotate(float angle) = 0;
-    virtual void move(float moveX, float moveY) = 0;
+    void moveX(float offset);
+    void moveY(float offset);
+    virtual void move(float offsetX, float offsetY) = 0;
 
     void update();
     void select(const sf::Vector2i &mousePosition);
