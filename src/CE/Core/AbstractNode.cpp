@@ -241,7 +241,6 @@ void AbstractNode::makeTransformed()
 
 bool AbstractNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
 {
-    const sf::Window &window = getWindow();
     sf::FloatRect combinedRect = getRect();
     if (parent) {
         combinedRect = parent->getCombinedTransform().transformRect(combinedRect);
