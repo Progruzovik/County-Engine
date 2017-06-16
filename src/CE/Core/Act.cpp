@@ -1,22 +1,22 @@
-#include <CE/Core/AbstractAct.hpp>
+#include <CE/Core/Act.hpp>
 #include <CE/UI/Parameters.hpp>
 
 namespace ce {
 
-AbstractAct::AbstractAct(Stage *stage, ContentMode contentMode, const sf::Color &bgColor)
+Act::Act(Stage *stage, ContentMode contentMode, const sf::Color &bgColor)
     : Speaker(stage), bgColor(bgColor), contentMode(contentMode), root(RootNode(stage)) {}
 
-void AbstractAct::onLeftMouseButtonPressed()
+void Act::onLeftMouseButtonPressed()
 {
     root.onLeftMouseButtonPressed();
 }
 
-void AbstractAct::onLeftMouseButtonReleased()
+void Act::onLeftMouseButtonReleased()
 {
     root.onLeftMouseButtonReleased();
 }
 
-void AbstractAct::onRightMouseButtonPressed()
+void Act::onRightMouseButtonPressed()
 {
     if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
         isRightMouseButtonPressed = true;
@@ -24,7 +24,7 @@ void AbstractAct::onRightMouseButtonPressed()
     }
 }
 
-void AbstractAct::onRightMouseButtonReleased()
+void Act::onRightMouseButtonReleased()
 {
     if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
         isRightMouseButtonPressed = false;
@@ -36,12 +36,12 @@ void AbstractAct::onRightMouseButtonReleased()
     }
 }
 
-const sf::Color &AbstractAct::getBgColor() const
+const sf::Color &Act::getBgColor() const
 {
     return bgColor;
 }
 
-void AbstractAct::setUpNodes()
+void Act::setUpNodes()
 {
     const float fullLeftIndent = leftUi ? leftUi->getWidth() : 0;
     const float fullTopIndent = topUi ? topUi->getHeight() : 0;
@@ -75,7 +75,7 @@ void AbstractAct::setUpNodes()
     }
 }
 
-void AbstractAct::update()
+void Act::update()
 {
     resizeUi();
     root.update();
@@ -118,12 +118,12 @@ void AbstractAct::update()
     root.draw();
 }
 
-void AbstractAct::setCenter(AbstractNode *value)
+void Act::setCenter(AbstractNode *value)
 {
     center = value;
 }
 
-void AbstractAct::setContent(AbstractNode *value)
+void Act::setContent(AbstractNode *value)
 {
     if (content) {
         root.removeContent(content, true);
@@ -133,43 +133,43 @@ void AbstractAct::setContent(AbstractNode *value)
     setUpNodes();
 }
 
-void AbstractAct::setLeftUi(AbstractNode *value)
+void Act::setLeftUi(AbstractNode *value)
 {
     updateUi(leftUi, value);
     leftUi = value;
     setUpNodes();
 }
 
-void AbstractAct::setRightUi(AbstractNode *value)
+void Act::setRightUi(AbstractNode *value)
 {
     updateUi(rightUi, value);
     rightUi = value;
     setUpNodes();
 }
 
-void AbstractAct::setTopUi(AbstractNode *value)
+void Act::setTopUi(AbstractNode *value)
 {
     updateUi(topUi, value);
     topUi = value;
     setUpNodes();
 }
 
-void AbstractAct::setBottomUi(AbstractNode *value)
+void Act::setBottomUi(AbstractNode *value)
 {
     updateUi(bottomUi, value);
     bottomUi = value;
     setUpNodes();
 }
 
-void AbstractAct::removeContent()
+void Act::removeContent(bool toDelete)
 {
     if (content) {
-        root.removeContent(content);
+        root.removeContent(content, toDelete);
         content = nullptr;
     }
 }
 
-void AbstractAct::updateUi(AbstractNode *oldUi, AbstractNode *newUi)
+void Act::updateUi(AbstractNode *oldUi, AbstractNode *newUi)
 {
     if (oldUi) {
         root.removeChild(oldUi, true);

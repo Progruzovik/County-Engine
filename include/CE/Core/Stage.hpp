@@ -6,12 +6,12 @@
 
 namespace ce {
 
-class AbstractAct;
+class Act;
 
 class Stage : public sf::RenderWindow, public Listener
 {
 public:
-    Stage(const sf::VideoMode &mode, const sf::String &title, AbstractAct *currentAct);
+    Stage(const sf::VideoMode &mode, const sf::String &title, Act *currentAct);
     ~Stage();
 
     sf::View &getMutableView();
@@ -20,7 +20,7 @@ public:
     void start();
 
 protected:
-    AbstractAct *currentAct;
+    Act *currentAct;
 
     virtual void update();
 

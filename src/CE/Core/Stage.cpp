@@ -1,11 +1,11 @@
 #include <CE/Core/Stage.hpp>
-#include <CE/Core/AbstractAct.hpp>
+#include <CE/Core/Act.hpp>
 #include <CE/UI/Parameters.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace ce {
 
-Stage::Stage(const sf::VideoMode &mode, const sf::String &title, AbstractAct *currentAct)
+Stage::Stage(const sf::VideoMode &mode, const sf::String &title, Act *currentAct)
     : sf::RenderWindow(mode, title), currentAct(currentAct), view(sf::FloatRect(0, 0, mode.width, mode.height))
 {
     setVerticalSyncEnabled(true);

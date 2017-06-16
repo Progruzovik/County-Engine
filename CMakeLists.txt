@@ -4,8 +4,8 @@ project(county)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        src/CE/Core/AbstractAct.cpp
-        include/CE/Core/AbstractAct.hpp
+        src/CE/Core/Act.cpp
+        include/CE/Core/Act.hpp
         src/CE/Core/AbstractNode.cpp
         include/CE/Core/AbstractNode.hpp
         src/CE/Core/AbstractVisualNode.cpp
