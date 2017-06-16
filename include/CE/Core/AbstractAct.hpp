@@ -44,8 +44,8 @@ private:
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
     sf::Vector2u mousePosition;
+    RootNode root;
 
-    std::unique_ptr<RootNode> root;
     AbstractNode *center = nullptr;
     AbstractNode *content = nullptr;
     AbstractNode *leftUi = nullptr;

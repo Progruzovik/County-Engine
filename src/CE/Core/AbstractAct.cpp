@@ -4,16 +4,16 @@
 namespace ce {
 
 AbstractAct::AbstractAct(Stage *stage, ContentMode contentMode, const sf::Color &bgColor)
-    : Speaker(stage), bgColor(bgColor), contentMode(contentMode), root(new RootNode(stage)) {}
+    : Speaker(stage), bgColor(bgColor), contentMode(contentMode), root(RootNode(stage)) {}
 
 void AbstractAct::onLeftMouseButtonPressed()
 {
-    root->onLeftMouseButtonPressed();
+    root.onLeftMouseButtonPressed();
 }
 
 void AbstractAct::onLeftMouseButtonReleased()
 {
-    root->onLeftMouseButtonReleased();
+    root.onLeftMouseButtonReleased();
 }
 
 void AbstractAct::onRightMouseButtonPressed()
@@ -29,10 +29,10 @@ void AbstractAct::onRightMouseButtonReleased()
     if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
         isRightMouseButtonPressed = false;
         if (!isMouseMovedWithRightButton) {
-            root->onRightMouseButtonReleased();
+            root.onRightMouseButtonReleased();
         }
     } else {
-        root->onRightMouseButtonReleased();
+        root.onRightMouseButtonReleased();
     }
 }
 
@@ -46,21 +46,21 @@ void AbstractAct::setUpNodes()
     const float fullLeftIndent = leftUi ? leftUi->getWidth() : 0;
     const float fullTopIndent = topUi ? topUi->getHeight() : 0;
 
-    float freeWidth = root->getWindow().getSize().x - fullLeftIndent;
+    float freeWidth = root.getWindow().getSize().x - fullLeftIndent;
     if (leftUi) {
         leftUi->setY(fullTopIndent);
     }
     if (rightUi) {
-        rightUi->setPos(root->getWindow().getSize().x - rightUi->getWidth(), fullTopIndent);
+        rightUi->setPos(root.getWindow().getSize().x - rightUi->getWidth(), fullTopIndent);
         freeWidth -= rightUi->getWidth();
     }
 
     if (topUi) {
         topUi->setX(fullLeftIndent);
     }
-    float freeHeight = root->getWindow().getSize().y - fullTopIndent;
+    float freeHeight = root.getWindow().getSize().y - fullTopIndent;
     if (bottomUi) {
-        bottomUi->setPos(fullLeftIndent, root->getWindow().getSize().y - bottomUi->getHeight());
+        bottomUi->setPos(fullLeftIndent, root.getWindow().getSize().y - bottomUi->getHeight());
         freeHeight -= bottomUi->getHeight();
     }
 
@@ -78,9 +78,9 @@ void AbstractAct::setUpNodes()
 void AbstractAct::update()
 {
     resizeUi();
-    root->update();
-    sf::Vector2i currentMousePosition = root->select();
-    if (contentMode == ContentMode::MOVABLE_BY_MOUSE && root->checkMouseOnIt(currentMousePosition) && content) {
+    root.update();
+    sf::Vector2i currentMousePosition = root.select();
+    if (contentMode == ContentMode::MOVABLE_BY_MOUSE && root.checkMouseOnIt(currentMousePosition) && content) {
         sf::Vector2i offset;
         if (isRightMouseButtonPressed) {
             offset.x += currentMousePosition.x - mousePosition.x;
@@ -94,17 +94,17 @@ void AbstractAct::update()
         const unsigned int activeArea = Parameters::get().getIndent() / 2;
         if (mousePosition.x < activeArea) {
             offset.x += SCROLL_SPEED * Parameters::get().getK();
-        } else if (mousePosition.x > root->getWindow().getSize().x - activeArea) {
+        } else if (mousePosition.x > root.getWindow().getSize().x - activeArea) {
             offset.x -= SCROLL_SPEED * Parameters::get().getK();
         }
         if (mousePosition.y < activeArea) {
             offset.y += SCROLL_SPEED * Parameters::get().getK();
-        } else if (mousePosition.y > root->getWindow().getSize().y - activeArea) {
+        } else if (mousePosition.y > root.getWindow().getSize().y - activeArea) {
             offset.y -= SCROLL_SPEED * Parameters::get().getK();
         }
         content->move(offset.x, offset.y);
     } else if (contentMode == ContentMode::CENTERED_ON_NODE) {
-        sf::Vector2u windowSize = root->getWindow().getSize();
+        sf::Vector2u windowSize = root.getWindow().getSize();
         sf::Vector2f offset((center->getHalfX() - content->getOriginX()) * content->getScale(),
                             (center->getHalfY() - content->getOriginY()) * content->getScale());
         AbstractNode *currentNode = center;
@@ -115,7 +115,7 @@ void AbstractAct::update()
         }
         content->setPos(windowSize.x / 2 - offset.x, windowSize.y / 2 - offset.y);
     }
-    root->draw();
+    root.draw();
 }
 
 void AbstractAct::setCenter(AbstractNode *value)
@@ -126,10 +126,10 @@ void AbstractAct::setCenter(AbstractNode *value)
 void AbstractAct::setContent(AbstractNode *value)
 {
     if (content) {
-        root->removeContent(content, true);
+        root.removeContent(content, true);
     }
     content = value;
-    root->addContent(content);
+    root.addContent(content);
     setUpNodes();
 }
 
@@ -164,7 +164,7 @@ void AbstractAct::setBottomUi(AbstractNode *value)
 void AbstractAct::removeContent()
 {
     if (content) {
-        root->removeContent(content);
+        root.removeContent(content);
         content = nullptr;
     }
 }
@@ -172,10 +172,10 @@ void AbstractAct::removeContent()
 void AbstractAct::updateUi(AbstractNode *oldUi, AbstractNode *newUi)
 {
     if (oldUi) {
-        root->removeChild(oldUi, true);
+        root.removeChild(oldUi, true);
     }
     if (newUi) {
-        root->addChild(newUi);
+        root.addChild(newUi);
     }
 }
 
