@@ -19,8 +19,8 @@ const sf::String &Button::getString() const
 void Button::setString(const sf::String &value)
 {
     text->setString(value);
-    text->setOrigin(text->getCenterX(), text->getCenterY());
-    text->setPos(getCenterX(), getCenterY());
+    text->setOrigin(text->getHalfX(), text->getHalfY());
+    text->setPos(getHalfX(), getHalfY());
 }
 
 void Button::setWidth(float value)
@@ -44,7 +44,7 @@ void Button::resize()
 {
     updateSize();
     text->resize();
-    text->setOrigin(text->getCenterX(), text->getCenterY());
+    text->setOrigin(text->getHalfX(), text->getHalfY());
 }
 
 void Button::onMouseEntered()
@@ -87,7 +87,7 @@ void Button::setState(State state)
 void Button::updateSize()
 {
     RectangleNode::setSize(size.x * Parameters::get().getK(), size.y * Parameters::get().getK());
-    text->setPos(getCenterX(), getCenterY());
+    text->setPos(getHalfX(), getHalfY());
 }
 
 }

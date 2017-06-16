@@ -54,16 +54,15 @@ const sf::Window &AbstractNode::getWindow() const
     return parent->getWindow();
 }
 
-float AbstractNode::getCenterX()
+float AbstractNode::getHalfX()
 {
     return getWidth() / 2;
 }
 
-float AbstractNode::getCenterY()
+float AbstractNode::getHalfY()
 {
     return getHeight() / 2;
 }
-
 
 float AbstractNode::getScale() const
 {
@@ -162,6 +161,7 @@ void AbstractNode::addChild(AbstractNode *child)
 {
     child->setParent(this);
     children.push_back(child);
+    child->onAdded();
 }
 
 void AbstractNode::removeChild(AbstractNode *child, bool toDelete)
@@ -279,7 +279,7 @@ void AbstractNode::setParent(AbstractNode *value)
 
 AbstractNode *AbstractNode::getSelectedChild(const sf::Vector2i &mousePosition)
 {
-    auto it = std::find_if(children.rbegin(), children.rend(), [&mousePosition](AbstractNode *child) -> bool {
+    auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](AbstractNode *child) -> bool {
         return child->checkSelectable() && child->checkMouseOnIt(mousePosition);
     });
     return it == children.rend() ? nullptr : *it;

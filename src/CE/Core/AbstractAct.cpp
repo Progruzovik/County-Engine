@@ -67,7 +67,7 @@ void AbstractAct::setUpNodes()
     if (content) {
         if (contentMode == ContentMode::STATIC) {
             content->setScale(std::min(freeWidth / content->getWidth(), freeHeight / content->getHeight()));
-            content->setOrigin(content->getCenterX(), content->getCenterY());
+            content->setOrigin(content->getHalfX(), content->getHalfY());
             content->setPos(fullLeftIndent + freeWidth / 2, fullTopIndent + freeHeight / 2);
         } else {
             content->setScale(Parameters::get().getK());
@@ -105,8 +105,8 @@ void AbstractAct::update()
         content->move(offset.x, offset.y);
     } else if (contentMode == ContentMode::CENTERED_ON_NODE) {
         sf::Vector2u windowSize = root->getWindow().getSize();
-        sf::Vector2f offset((center->getCenterX() - content->getOriginX()) * content->getScale(),
-                            (center->getCenterY() - content->getOriginY()) * content->getScale());
+        sf::Vector2f offset((center->getHalfX() - content->getOriginX()) * content->getScale(),
+                            (center->getHalfY() - content->getOriginY()) * content->getScale());
         AbstractNode *currentNode = center;
         while (currentNode != content) {
             offset.x += (currentNode->getX() - currentNode->getOriginX()) * content->getScale();

@@ -3,7 +3,7 @@
 
 namespace ce {
 
-constexpr float MATH_PI = 3.1415927F;
+constexpr float MATH_PI = 3.141592654f;
 
 }
 

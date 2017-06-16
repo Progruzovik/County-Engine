@@ -23,9 +23,9 @@ public:
     virtual const sf::Window &getWindow() const;
 
     virtual float getWidth() = 0;
-    float getCenterX();
+    float getHalfX();
     virtual float getHeight() = 0;
-    float getCenterY();
+    float getHalfY();
 
     float getScale() const;
     virtual void setScale(float value) = 0;
@@ -57,6 +57,7 @@ public:
     void removeChildren(bool toDelete = false, unsigned long firstIndex = 0, long lastIndex = -1);
 
 protected:
+    virtual void onAdded() {};
     virtual void onUpdated();
     virtual void onMouseEntered() {}
     virtual void onMouseLeft();
