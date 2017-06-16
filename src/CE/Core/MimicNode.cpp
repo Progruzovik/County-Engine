@@ -10,9 +10,9 @@ float MimicNode::getWidth()
 {
     float width = 0;
     for (auto *child : getChildren()) {
-        float newWidth = child->getX() + child->getWidth() * child->getScale();
-        if (newWidth > width) {
-            width = newWidth;
+        float nextWidth = child->getX() - child->getOriginX() + child->getWidth() * child->getScale();
+        if (nextWidth > width) {
+            width = nextWidth;
         }
     }
     return width;
@@ -22,9 +22,9 @@ float MimicNode::getHeight()
 {
     float height = 0;
     for (auto *child : getChildren()) {
-        float newHeight = child->getY() + child->getHeight() * child->getScale();
-        if (newHeight > height) {
-            height = newHeight;
+        float nextHeight = child->getY() - child->getOriginY() + child->getHeight() * child->getScale();
+        if (nextHeight > height) {
+            height = nextHeight;
         }
     }
     return height;
