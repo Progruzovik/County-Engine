@@ -35,13 +35,13 @@ public:
     void update();
 
 protected:
+    sf::Color bgColor;
+    RootNode root;
+
     virtual void resizeUi() {}
 
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
-
-    const sf::Color bgColor;
-    RootNode root;
 
     ContentMode contentMode;
     bool isRightMouseButtonPressed = false;
