@@ -5,9 +5,8 @@
 
 namespace ce {
 
-const sf::String UPDATED = "updated";
-const sf::String CLICKED = "clicked";
-const sf::String RIGHT_CLICKED = "rightClicked";
+const sf::String UPDATE = "update";
+const sf::String CLICK = "click";
 
 class Speaker
 {

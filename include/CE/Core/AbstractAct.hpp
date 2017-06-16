@@ -3,6 +3,7 @@
 
 #include <CE/Core/RootNode.hpp>
 #include <CE/Event/Speaker.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 namespace ce {
 
@@ -18,6 +19,8 @@ public:
     void onLeftMouseButtonReleased();
     void onRightMouseButtonPressed();
     void onRightMouseButtonReleased();
+    virtual void onKeyReleased(sf::Keyboard::Key key) {}
+    void onEvent(ce::Speaker *speaker, const sf::String &name) override {}
 
     const sf::Color &getBgColor() const;
 

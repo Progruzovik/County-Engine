@@ -195,7 +195,7 @@ void AbstractNode::removeChildren(bool toDelete, unsigned long firstIndex, long 
 
 void AbstractNode::onUpdated()
 {
-    declareEvent(UPDATED);
+    declareEvent(UPDATE);
 }
 
 void AbstractNode::onMouseLeft()

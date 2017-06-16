@@ -69,7 +69,7 @@ void Button::onLeftMouseButtonPressed()
 void Button::onLeftMouseButtonReleased()
 {
     setState(State::MOUSE_OVER);
-    declareEvent(CLICKED);
+    declareEvent(CLICK);
 }
 
 void Button::setState(State state)

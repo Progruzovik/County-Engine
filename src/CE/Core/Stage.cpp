@@ -52,6 +52,8 @@ void Stage::update()
             } else if (event.mouseButton.button == sf::Mouse::Right) {
                 currentAct->onRightMouseButtonReleased();
             }
+        } else if (event.type == sf::Event::KeyReleased) {
+            currentAct->onKeyReleased(event.key.code);
         } else if (event.type == sf::Event::Closed) {
             close();
         }
