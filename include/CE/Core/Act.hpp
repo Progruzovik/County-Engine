@@ -14,6 +14,8 @@ class Act : public Speaker, public Listener
 public:
     Act(Stage *stage, ContentMode contentMode, const sf::Color &bgColor = sf::Color::Black);
 
+    void onMouseEntered();
+    void onMouseLeft();
     void onLeftMouseButtonPressed();
     void onLeftMouseButtonReleased();
     void onRightMouseButtonPressed();
@@ -29,8 +31,6 @@ public:
     void setTopUi(AbstractNode *value);
     void setBottomUi(AbstractNode *value);
 
-    void removeContent(bool toDelete = false);
-
     virtual void setUpNodes();
     void update();
 
@@ -44,9 +44,10 @@ private:
     static constexpr unsigned int SCROLL_SPEED = 5;
 
     ContentMode contentMode;
+    sf::Vector2i savedMousePosition;
+    bool isMouseOnIt;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
-    sf::Vector2u mousePosition;
 
     AbstractNode *center = nullptr;
     AbstractNode *content = nullptr;

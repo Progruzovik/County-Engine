@@ -11,6 +11,7 @@ class RootNode : public MimicNode
 public:
     RootNode(sf::RenderWindow *window);
 
+    void onMouseLeft() override;
     void onLeftMouseButtonPressed() override;
     void onLeftMouseButtonReleased() override;
     void onRightMouseButtonReleased() override;
@@ -18,7 +19,6 @@ public:
     const sf::Window &getWindow() const override;
     bool checkMouseOnIt(const sf::Vector2i &mousePosition) override;
 
-    sf::Vector2i select();
     void draw();
     void addContent(AbstractNode *content);
     void removeContent(AbstractNode *content, bool toDelete = false);

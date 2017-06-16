@@ -23,7 +23,7 @@ void AbstractNode::setSelectable(bool value)
 {
     if (isSelectable != value) {
         isSelectable = value;
-        if (isSelectable && parent->checkChildSelected(this)) {
+        if (isSelectable && this == parent->getSelectedChild()) {
             onMouseEntered();
         } else {
             onMouseLeft();
@@ -140,9 +140,11 @@ void AbstractNode::update()
 
 void AbstractNode::select(const sf::Vector2i &mousePosition)
 {
-    deselectChild();
-    if (checkSelectable()) {
-        selectedChild = getSelectedChild(mousePosition);
+    if (selectedChild && (!selectedChild->checkSelectable() || !selectedChild->checkMouseOnIt(mousePosition))) {
+        deselectChild();
+    }
+    if (!selectedChild) {
+        selectedChild = findSelectedChild(mousePosition);
         if (selectedChild) {
             selectedChild->onMouseEntered();
         }
@@ -198,11 +200,6 @@ void AbstractNode::onUpdated()
     declareEvent(UPDATE);
 }
 
-void AbstractNode::onMouseLeft()
-{
-    deselectChild();
-}
-
 void AbstractNode::onLeftMouseButtonPressed()
 {
     if (selectedChild && selectedChild->checkSelectable()) {
@@ -229,6 +226,11 @@ const std::vector<AbstractNode *> &AbstractNode::getChildren() const
     return children;
 }
 
+const AbstractNode* AbstractNode::getSelectedChild() const
+{
+    return  selectedChild;
+}
+
 void AbstractNode::makeTransformed()
 {
     isTransformed = true;
@@ -244,15 +246,17 @@ bool AbstractNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
     if (parent) {
         combinedRect = parent->getCombinedTransform().transformRect(combinedRect);
     }
-    return window.hasFocus() && mousePosition.x > 0 && mousePosition.x < (int) window.getSize().x
-            && mousePosition.y > 0 && mousePosition.y < (int) window.getSize().y
-            && mousePosition.x > combinedRect.left && mousePosition.x < combinedRect.left + combinedRect.width
-            && mousePosition.y > combinedRect.top && mousePosition.y < combinedRect.top + combinedRect.height;
+    return mousePosition.x > combinedRect.left && mousePosition.x < combinedRect.left + combinedRect.width
+           && mousePosition.y > combinedRect.top && mousePosition.y < combinedRect.top + combinedRect.height;
 }
 
-bool AbstractNode::checkChildSelected(const AbstractNode *child) const
+void AbstractNode::deselectChild()
 {
-    return selectedChild == child;
+    if (selectedChild) {
+        selectedChild->deselectChild();
+        selectedChild->onMouseLeft();
+        selectedChild = nullptr;
+    }
 }
 
 void AbstractNode::drawToTarget(sf::RenderTarget *target)
@@ -277,20 +281,12 @@ void AbstractNode::setParent(AbstractNode *value)
     parent = value;
 }
 
-AbstractNode *AbstractNode::getSelectedChild(const sf::Vector2i &mousePosition)
+AbstractNode *AbstractNode::findSelectedChild(const sf::Vector2i &mousePosition)
 {
     auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](AbstractNode *child) -> bool {
         return child->checkSelectable() && child->checkMouseOnIt(mousePosition);
     });
     return it == children.rend() ? nullptr : *it;
-}
-
-void AbstractNode::deselectChild()
-{
-    if (selectedChild) {
-        selectedChild->onMouseLeft();
-        selectedChild = nullptr;
-    }
 }
 
 }

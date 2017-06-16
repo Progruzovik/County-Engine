@@ -60,17 +60,18 @@ protected:
     virtual void onAdded() {};
     virtual void onUpdated();
     virtual void onMouseEntered() {}
-    virtual void onMouseLeft();
+    virtual void onMouseLeft() {}
     virtual void onLeftMouseButtonPressed();
     virtual void onLeftMouseButtonReleased();
     virtual void onRightMouseButtonReleased();
 
     virtual const sf::Transformable &getTransformable() const = 0;
     const std::vector<AbstractNode *> &getChildren() const;
+    const AbstractNode *getSelectedChild() const;
 
     void makeTransformed();
     virtual bool checkMouseOnIt(const sf::Vector2i &mousePosition);
-    bool checkChildSelected(const AbstractNode *child) const;
+    void deselectChild();
 
     virtual void drawToTarget(sf::RenderTarget *target);
     sf::Vector2f calculateMouseLocalPosition();
@@ -86,8 +87,7 @@ private:
     AbstractNode *selectedChild = nullptr;
 
     void setParent(AbstractNode *value);
-    AbstractNode *getSelectedChild(const sf::Vector2i &mousePosition);
-    void deselectChild();
+    AbstractNode *findSelectedChild(const sf::Vector2i &mousePosition);
 };
 
 }

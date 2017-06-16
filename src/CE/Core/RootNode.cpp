@@ -8,6 +8,11 @@ RootNode::RootNode(sf::RenderWindow *window) : MimicNode(true, true), window(win
     addChild(contentLayer);
 }
 
+void RootNode::onMouseLeft()
+{
+    deselectChild();
+}
+
 void RootNode::onLeftMouseButtonPressed()
 {
     MimicNode::onLeftMouseButtonPressed();
@@ -30,14 +35,8 @@ const sf::Window &RootNode::getWindow() const
 
 bool RootNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
 {
-    return MimicNode::checkMouseOnIt(mousePosition);
-}
-
-sf::Vector2i RootNode::select()
-{
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(getWindow());
-    MimicNode::select(mousePosition);
-    return mousePosition;
+    return window->hasFocus() && mousePosition.x > 0 && mousePosition.x < window->getSize().x
+           && mousePosition.y > 0 && mousePosition.y < window->getSize().y;
 }
 
 void RootNode::draw()
