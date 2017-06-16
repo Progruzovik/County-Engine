@@ -1,5 +1,5 @@
-#ifndef CORE_ABSTRACTNODE_HPP
-#define CORE_ABSTRACTNODE_HPP
+#ifndef CE_ABSTRACTNODE_HPP
+#define CE_ABSTRACTNODE_HPP
 
 #include <CE/Event/Speaker.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

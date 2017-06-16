@@ -1,5 +1,5 @@
-#ifndef UI_TEXT_HPP
-#define UI_TEXT_HPP
+#ifndef CE_TEXT_HPP
+#define CE_TEXT_HPP
 
 #include <CE/Core/AbstractVisualNode.hpp>
 #include <CE/UI/Parameters.hpp>

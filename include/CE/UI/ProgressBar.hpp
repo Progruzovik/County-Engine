@@ -1,5 +1,5 @@
-#ifndef UI_PROGRESSBAR_HPP
-#define UI_PROGRESSBAR_HPP
+#ifndef CE_PROGRESSBAR_HPP
+#define CE_PROGRESSBAR_HPP
 
 #include <CE/Core/RectangleNode.hpp>
 

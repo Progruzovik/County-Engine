@@ -1,5 +1,5 @@
-#ifndef CORE_SPRITENODE_HPP
-#define CORE_SPRITENODE_HPP
+#ifndef CE_SPRITENODE_HPP
+#define CE_SPRITENODE_HPP
 
 #include <CE/Core/AbstractVisualNode.hpp>
 #include <SFML/Graphics/Sprite.hpp>

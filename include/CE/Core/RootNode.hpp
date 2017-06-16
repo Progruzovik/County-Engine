@@ -1,5 +1,5 @@
-#ifndef CORE_ROOTNODE_HPP
-#define CORE_ROOTNODE_HPP
+#ifndef CE_ROOTNODE_HPP
+#define CE_ROOTNODE_HPP
 
 #include <CE/Core/MimicNode.hpp>
 #include <CE/Core/Stage.hpp>

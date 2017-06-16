@@ -1,5 +1,5 @@
-#ifndef CORE_RECTANGLENODE_HPP
-#define CORE_RECTANGLENODE_HPP
+#ifndef CE_RECTANGLENODE_HPP
+#define CE_RECTANGLENODE_HPP
 
 #include <CE/Core/AbstractVisualNode.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>

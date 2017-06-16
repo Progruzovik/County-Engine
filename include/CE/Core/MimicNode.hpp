@@ -1,5 +1,5 @@
-#ifndef CORE_MIMICNODE_HPP
-#define CORE_MIMICNODE_HPP
+#ifndef CE_MIMICNODE_HPP
+#define CE_MIMICNODE_HPP
 
 #include <CE/Core/AbstractNode.hpp>
 #include <CE/Event/Listener.hpp>

@@ -1,5 +1,5 @@
-#ifndef EVENT_RECEIVER_HPP
-#define EVENT_RECEIVER_HPP
+#ifndef CE_RECEIVER_HPP
+#define CE_RECEIVER_HPP
 
 #include <SFML/System/String.hpp>
 

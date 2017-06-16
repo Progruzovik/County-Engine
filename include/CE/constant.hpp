@@ -1,5 +1,5 @@
-#ifndef CONSTANT_HPP
-#define CONSTANT_HPP
+#ifndef CE_CONSTANT_HPP
+#define CE_CONSTANT_HPP
 
 namespace ce {
 

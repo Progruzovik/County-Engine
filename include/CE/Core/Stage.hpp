@@ -1,5 +1,5 @@
-#ifndef CORE_STAGE_HPP
-#define CORE_STAGE_HPP
+#ifndef CE_STAGE_HPP
+#define CE_STAGE_HPP
 
 #include <CE/Event/Listener.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

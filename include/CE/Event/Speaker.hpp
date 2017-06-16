@@ -1,5 +1,5 @@
-#ifndef EVENT_SPEAKER_HPP
-#define EVENT_SPEAKER_HPP
+#ifndef CE_SPEAKER_HPP
+#define CE_SPEAKER_HPP
 
 #include <CE/Event/Listener.hpp>
 

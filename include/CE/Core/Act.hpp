@@ -1,5 +1,5 @@
-#ifndef CORE_ACT_HPP
-#define CORE_ACT_HPP
+#ifndef CE_ACT_HPP
+#define CE_ACT_HPP
 
 #include <CE/Core/RootNode.hpp>
 #include <CE/Event/Speaker.hpp>

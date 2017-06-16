@@ -1,5 +1,5 @@
-#ifndef CORE_CIRCLENODE_HPP
-#define CORE_CIRCLENODE_HPP
+#ifndef CE_CIRCLENODE_HPP
+#define CE_CIRCLENODE_HPP
 
 #include <CE/Core/AbstractVisualNode.hpp>
 #include <SFML/Graphics/CircleShape.hpp>

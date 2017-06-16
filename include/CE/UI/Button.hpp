@@ -1,5 +1,5 @@
-#ifndef UI_BUTTON_HPP
-#define UI_BUTTON_HPP
+#ifndef CE_BUTTON_HPP
+#define CE_BUTTON_HPP
 
 #include <CE/Core/RectangleNode.hpp>
 #include <CE/UI/Text.hpp>
