@@ -140,12 +140,11 @@ void AbstractNode::update()
 
 void AbstractNode::select(const sf::Vector2i &mousePosition)
 {
-    if (selectedChild && (!selectedChild->checkSelectable() || !selectedChild->checkMouseOnIt(mousePosition))) {
+    AbstractNode *newSelectedChild = findSelectedChild(mousePosition);
+    if (selectedChild != newSelectedChild) {
         deselectChild();
-    }
-    if (!selectedChild) {
-        selectedChild = findSelectedChild(mousePosition);
-        if (selectedChild) {
+        if (newSelectedChild) {
+            selectedChild = newSelectedChild;
             selectedChild->onMouseEntered();
         }
     }
@@ -182,7 +181,7 @@ void AbstractNode::removeChild(AbstractNode *child, bool toDelete)
 void AbstractNode::removeChildren(bool toDelete, unsigned long firstIndex, long lastIndex)
 {
     const auto begin = children.begin() + firstIndex;
-    const auto end = lastIndex == -1 || lastIndex > (long)children.size()
+    const auto end = lastIndex == -1 || lastIndex > children.size()
             ? children.end()
             : children.begin() + lastIndex;
     std::for_each(begin, end, [toDelete](AbstractNode *child) {

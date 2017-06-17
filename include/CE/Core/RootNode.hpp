@@ -17,7 +17,6 @@ public:
     void onRightMouseButtonReleased() override;
 
     const sf::Window &getWindow() const override;
-    bool checkMouseOnIt(const sf::Vector2i &mousePosition) override;
 
     void draw();
     void addContent(AbstractNode *content);

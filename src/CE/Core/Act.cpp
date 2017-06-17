@@ -4,10 +4,9 @@
 
 namespace ce {
 
-Act::Act(Stage *stage, ContentMode contentMode, const sf::Color &bgColor)
+Act::Act(Stage *stage, Mode contentMode, const sf::Color &bgColor)
     : Speaker(stage), bgColor(bgColor), root(RootNode(stage)), contentMode(contentMode),
-      savedMousePosition(sf::Mouse::getPosition(root.getWindow())),
-      isMouseOnIt(root.checkMouseOnIt(savedMousePosition)) {}
+      savedMousePosition(sf::Mouse::getPosition(root.getWindow())) {}
 
 void Act::onMouseEntered()
 {
@@ -32,7 +31,7 @@ void Act::onLeftMouseButtonReleased()
 
 void Act::onRightMouseButtonPressed()
 {
-    if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
+    if (contentMode == Mode::MOVABLE_BY_MOUSE) {
         isRightMouseButtonPressed = true;
         isMouseMovedWithRightButton = false;
     }
@@ -40,7 +39,7 @@ void Act::onRightMouseButtonPressed()
 
 void Act::onRightMouseButtonReleased()
 {
-    if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
+    if (contentMode == Mode::MOVABLE_BY_MOUSE) {
         isRightMouseButtonPressed = false;
         if (!isMouseMovedWithRightButton) {
             root.onRightMouseButtonReleased();
@@ -79,7 +78,7 @@ void Act::setUpNodes()
     }
 
     if (content) {
-        if (contentMode == ContentMode::STATIC) {
+        if (contentMode == Mode::STATIC) {
             content->setScale(std::min(freeWidth / content->getWidth(), freeHeight / content->getHeight()));
             content->setOrigin(content->getHalfX(), content->getHalfY());
             content->setPos(fullLeftIndent + freeWidth / 2, fullTopIndent + freeHeight / 2);
@@ -98,7 +97,7 @@ void Act::update()
         sf::Vector2i mousePosition = sf::Mouse::getPosition(root.getWindow());
         root.select(mousePosition);
 
-        if (contentMode == ContentMode::MOVABLE_BY_MOUSE) {
+        if (contentMode == Mode::MOVABLE_BY_MOUSE) {
             sf::Vector2i offset;
             if (isRightMouseButtonPressed) {
                 offset.x += mousePosition.x - savedMousePosition.x;
@@ -107,23 +106,22 @@ void Act::update()
                     isMouseMovedWithRightButton = true;
                 }
             }
-            savedMousePosition.x = mousePosition.x;
-            savedMousePosition.y = mousePosition.y;
             const unsigned int activeArea = Parameters::get().getIndent() / 2;
-            if (savedMousePosition.x < activeArea) {
+            if (mousePosition.x < activeArea) {
                 offset.x += SCROLL_SPEED * Parameters::get().getK();
-            } else if (savedMousePosition.x > root.getWindow().getSize().x - activeArea) {
+            } else if (mousePosition.x > root.getWindow().getSize().x - activeArea) {
                 offset.x -= SCROLL_SPEED * Parameters::get().getK();
             }
-            if (savedMousePosition.y < activeArea) {
+            if (mousePosition.y < activeArea) {
                 offset.y += SCROLL_SPEED * Parameters::get().getK();
-            } else if (savedMousePosition.y > root.getWindow().getSize().y - activeArea) {
+            } else if (mousePosition.y > root.getWindow().getSize().y - activeArea) {
                 offset.y -= SCROLL_SPEED * Parameters::get().getK();
             }
             content->move(offset.x, offset.y);
+            savedMousePosition = mousePosition;
         }
     }
-    if (contentMode == ContentMode::CENTERED_ON_NODE) {
+    if (contentMode == Mode::CENTERED_ON_NODE) {
         sf::Vector2u windowSize = root.getWindow().getSize();
         sf::Vector2f offset((center->getHalfX() - content->getOriginX()) * content->getScale(),
                             (center->getHalfY() - content->getOriginY()) * content->getScale());

@@ -7,12 +7,11 @@
 
 namespace ce {
 
-enum class ContentMode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
-
 class Act : public Speaker, public Listener
 {
 public:
-    Act(Stage *stage, ContentMode contentMode, const sf::Color &bgColor = sf::Color::Black);
+    enum class Mode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
+    Act(Stage *stage, Mode contentMode, const sf::Color &bgColor = sf::Color::Black);
 
     void onMouseEntered();
     void onMouseLeft();
@@ -43,9 +42,9 @@ protected:
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
 
-    ContentMode contentMode;
+    Mode contentMode;
     sf::Vector2i savedMousePosition;
-    bool isMouseOnIt;
+    bool isMouseOnIt = true;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
 

@@ -33,12 +33,6 @@ const sf::Window &RootNode::getWindow() const
     return *window;
 }
 
-bool RootNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
-{
-    return window->hasFocus() && mousePosition.x > 0 && mousePosition.x < window->getSize().x
-           && mousePosition.y > 0 && mousePosition.y < window->getSize().y;
-}
-
 void RootNode::draw()
 {
     drawToTarget(window);
