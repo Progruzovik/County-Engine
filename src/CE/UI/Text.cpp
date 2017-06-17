@@ -1,4 +1,5 @@
 #include <CE/UI/Text.hpp>
+#include <CE/UI/Parameters.hpp>
 #include <CE/constant.hpp>
 #include <cmath>
 

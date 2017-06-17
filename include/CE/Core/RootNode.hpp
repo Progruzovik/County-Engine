@@ -2,14 +2,14 @@
 #define CE_ROOTNODE_HPP
 
 #include <CE/Core/MimicNode.hpp>
-#include <CE/Core/Stage.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace ce {
 
 class RootNode : public MimicNode
 {
 public:
-    RootNode(sf::RenderWindow *window);
+    RootNode(sf::RenderWindow &window);
 
     void onMouseLeft() override;
     void onLeftMouseButtonPressed() override;
@@ -24,7 +24,7 @@ public:
 
 private:
     MimicNode *contentLayer = new MimicNode(true, true);
-    sf::RenderWindow *window;
+    sf::RenderWindow &window;
 };
 
 }

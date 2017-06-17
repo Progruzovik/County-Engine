@@ -5,7 +5,7 @@
 namespace ce {
 
 Act::Act(Stage *stage, Mode contentMode, const sf::Color &bgColor)
-    : Speaker(stage), bgColor(bgColor), root(RootNode(stage)), contentMode(contentMode),
+    : Speaker(stage), bgColor(bgColor), root(RootNode(*stage)), contentMode(contentMode),
       savedMousePosition(sf::Mouse::getPosition(root.getWindow())) {}
 
 void Act::onMouseEntered()

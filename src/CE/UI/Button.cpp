@@ -1,4 +1,5 @@
 #include <CE/UI/Button.hpp>
+#include <CE/UI/Parameters.hpp>
 
 namespace ce {
 

@@ -11,9 +11,8 @@ namespace ce {
 class AbstractNode : public Speaker
 {
 public:
-    AbstractNode(bool isSelectable = false, bool isUpdatable = false,
-                 Listener *listener = nullptr);
-    virtual ~AbstractNode();
+    AbstractNode(bool isSelectable = false, bool isUpdatable = false, Listener *listener = nullptr);
+    ~AbstractNode() override;
 
     bool checkSelectable() const;
     void setSelectable(bool value);
@@ -67,13 +66,12 @@ protected:
 
     virtual const sf::Transformable &getTransformable() const = 0;
     const std::vector<AbstractNode *> &getChildren() const;
-    const AbstractNode *getSelectedChild() const;
 
     void makeTransformed();
     virtual bool checkMouseOnIt(const sf::Vector2i &mousePosition);
     void deselectChild();
 
-    virtual void drawToTarget(sf::RenderTarget *target);
+    virtual void drawToTarget(sf::RenderTarget &target);
     sf::Vector2f calculateMouseLocalPosition();
 
 private:

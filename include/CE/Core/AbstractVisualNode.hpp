@@ -11,7 +11,7 @@ public:
     AbstractVisualNode(bool isSelectable = false, bool isUpdatable = false, Listener *listener = nullptr);
 
     virtual void setAlpha(float value) = 0;
-    void drawToTarget(sf::RenderTarget *target) override;
+    void drawToTarget(sf::RenderTarget &target) override;
 
 protected:
     virtual const sf::Drawable &getDrawable() const = 0;

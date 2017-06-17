@@ -1,8 +1,8 @@
 #ifndef CE_STAGE_HPP
 #define CE_STAGE_HPP
 
-#include <CE/Event/Listener.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <CE/Event/Listener.hpp>
 
 namespace ce {
 
@@ -12,11 +12,9 @@ class Stage : public sf::RenderWindow, public Listener
 {
 public:
     Stage(const sf::VideoMode &mode, const sf::String &title, Act *currentAct);
-    ~Stage();
+    ~Stage() override;
 
-    sf::View &getMutableView();
-
-    void onEvent(Speaker *, const sf::String &) override {}
+    void onEvent(Speaker *speaker, const sf::String &name) override {}
     void start();
 
 protected:

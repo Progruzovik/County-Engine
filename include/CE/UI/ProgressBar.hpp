@@ -9,7 +9,7 @@ class ProgressBar final : public RectangleNode
 {
 public:
     ProgressBar(float width, float height, const sf::Color &color = sf::Color::Black,
-                int maximum = 100, int minimum = 0);
+                float maximum = 100, float minimum = 0);
 
     float getWidth() override;
     void setWidth(float width) override;

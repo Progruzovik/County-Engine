@@ -2,15 +2,16 @@
 #define CE_ACT_HPP
 
 #include <CE/Core/RootNode.hpp>
-#include <CE/Event/Speaker.hpp>
+#include <CE/Core/Stage.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace ce {
 
-class Act : public Speaker, public Listener
+class Act : public Speaker
 {
 public:
     enum class Mode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
+
     Act(Stage *stage, Mode contentMode, const sf::Color &bgColor = sf::Color::Black);
 
     void onMouseEntered();
@@ -20,7 +21,6 @@ public:
     void onRightMouseButtonPressed();
     void onRightMouseButtonReleased();
     virtual void onKeyReleased(sf::Keyboard::Key key) {}
-    void onEvent(ce::Speaker *speaker, const sf::String &name) override {}
 
     const sf::Color &getBgColor() const;
     void setCenter(AbstractNode *value);

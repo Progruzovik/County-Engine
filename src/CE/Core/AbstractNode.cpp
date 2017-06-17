@@ -23,7 +23,7 @@ void AbstractNode::setSelectable(bool value)
 {
     if (isSelectable != value) {
         isSelectable = value;
-        if (isSelectable && this == parent->getSelectedChild()) {
+        if (isSelectable && this == parent->selectedChild) {
             onMouseEntered();
         } else {
             onMouseLeft();
@@ -225,11 +225,6 @@ const std::vector<AbstractNode *> &AbstractNode::getChildren() const
     return children;
 }
 
-const AbstractNode* AbstractNode::getSelectedChild() const
-{
-    return  selectedChild;
-}
-
 void AbstractNode::makeTransformed()
 {
     isTransformed = true;
@@ -257,7 +252,7 @@ void AbstractNode::deselectChild()
     }
 }
 
-void AbstractNode::drawToTarget(sf::RenderTarget *target)
+void AbstractNode::drawToTarget(sf::RenderTarget &target)
 {
     for (auto *child : children) {
         child->drawToTarget(target);

@@ -2,7 +2,7 @@
 
 namespace ce {
 
-ProgressBar::ProgressBar(float width, float height, const sf::Color &color, int maximum, int minimum)
+ProgressBar::ProgressBar(float width, float height, const sf::Color &color, float maximum, float minimum)
     : RectangleNode(width, height, color), maxWidth(width), minimum(minimum), maximum(maximum) {}
 
 float ProgressBar::getWidth()

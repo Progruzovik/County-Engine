@@ -1,9 +1,8 @@
 #include <CE/Core/RootNode.hpp>
-#include <SFML/Window/Mouse.hpp>
 
 namespace ce {
 
-RootNode::RootNode(sf::RenderWindow *window) : MimicNode(true, true), window(window)
+RootNode::RootNode(sf::RenderWindow &window) : MimicNode(true, true), window(window)
 {
     addChild(contentLayer);
 }
@@ -30,7 +29,7 @@ void RootNode::onRightMouseButtonReleased()
 
 const sf::Window &RootNode::getWindow() const
 {
-    return *window;
+    return window;
 }
 
 void RootNode::draw()

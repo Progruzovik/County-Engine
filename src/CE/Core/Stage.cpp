@@ -19,14 +19,8 @@ Stage::~Stage()
     }
 }
 
-sf::View &Stage::getMutableView()
-{
-    return view;
-}
-
 void Stage::start()
 {
-    sf::Clock clock;
     while (isOpen()) {
         update();
     }
@@ -70,8 +64,8 @@ void Stage::update()
 
 void Stage::updateView()
 {
-    currentAct->setUpNodes();
     setView(view);
+    currentAct->setUpNodes();
 }
 
 }

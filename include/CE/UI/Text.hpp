@@ -2,7 +2,6 @@
 #define CE_TEXT_HPP
 
 #include <CE/Core/AbstractVisualNode.hpp>
-#include <CE/UI/Parameters.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 namespace ce {

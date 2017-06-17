@@ -5,13 +5,9 @@ namespace ce {
 AbstractVisualNode::AbstractVisualNode(bool isSelectable, bool isUpdatable, Listener *listener)
     : AbstractNode(isSelectable, isUpdatable, listener) {}
 
-void AbstractVisualNode::drawToTarget(sf::RenderTarget *target)
+void AbstractVisualNode::drawToTarget(sf::RenderTarget &target)
 {
-    if (getParent()) {
-        target->draw(getDrawable(), getParent()->getCombinedTransform());
-    } else {
-        target->draw(getDrawable());
-    }
+    target.draw(getDrawable(), getParent()->getCombinedTransform());
     AbstractNode::drawToTarget(target);
 }
 
