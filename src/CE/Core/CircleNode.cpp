@@ -3,8 +3,8 @@
 
 namespace ce {
 
-CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable, bool isUpdatable, Listener *listener)
-    : AbstractVisualNode(isSelectable, isUpdatable, listener), shape(sf::CircleShape(radius))
+CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable, Listener *listener)
+    : AbstractVisualNode(isSelectable, listener), shape(sf::CircleShape(radius))
 {
     shape.setOrigin(radius, radius);
     shape.setFillColor(color);
@@ -18,7 +18,7 @@ void CircleNode::setAlpha(float value)
 
 float CircleNode::getWidth()
 {
-    return shape.getRadius();
+    return shape.getRadius() * 2;
 }
 
 float CircleNode::getHeight()
@@ -84,10 +84,11 @@ const sf::Drawable &CircleNode::getDrawable() const
 
 bool CircleNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
 {
-    sf::Vector2f position = getParent() ? getParent()->getCombinedTransform().transformPoint(shape.getPosition())
-                                        : shape.getPosition();
-    return std::sqrt((position.x - mousePosition.x) * (position.x - mousePosition.x)
-                     + (position.y - mousePosition.y) * (position.y - mousePosition.y)) > shape.getRadius();
+    sf::Vector2f mouseLocalPosition = calculateMouseLocalPosition(mousePosition);
+    mouseLocalPosition.x -= shape.getRadius();
+    mouseLocalPosition.y -= shape.getRadius();
+    return std::sqrt(mouseLocalPosition.x * mouseLocalPosition.x + mouseLocalPosition.y * mouseLocalPosition.y)
+           <= shape.getRadius();
 }
 
 }

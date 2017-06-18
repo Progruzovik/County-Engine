@@ -5,9 +5,6 @@
 
 namespace ce {
 
-const sf::String UPDATE = "update";
-const sf::String CLICK = "click";
-
 class Speaker
 {
 public:

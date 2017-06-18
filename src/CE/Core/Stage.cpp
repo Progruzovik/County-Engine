@@ -34,8 +34,8 @@ void Stage::update()
             Parameters::get().update(event.size.width, event.size.height);
             view.reset(sf::FloatRect(0, 0, event.size.width, event.size.height));
             updateView();
-        } else if (event.type == sf::Event::MouseEntered) {
-            currentAct->onMouseEntered();
+        } else if (event.type == sf::Event::MouseMoved) {
+            currentAct->onMouseMoved(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
         } else if (event.type == sf::Event::MouseLeft) {
             currentAct->onMouseLeft();
         } else if (event.type == sf::Event::MouseButtonPressed) {

@@ -14,7 +14,7 @@ public:
 
     Act(Stage *stage, Mode contentMode, const sf::Color &bgColor = sf::Color::Black);
 
-    void onMouseEntered();
+    void onMouseMoved(const sf::Vector2i &mousePosition);
     void onMouseLeft();
     void onLeftMouseButtonPressed();
     void onLeftMouseButtonReleased();
@@ -44,7 +44,6 @@ private:
 
     Mode contentMode;
     sf::Vector2i savedMousePosition;
-    bool isMouseOnIt = true;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
 

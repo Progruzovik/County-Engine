@@ -3,8 +3,7 @@
 
 namespace ce {
 
-MimicNode::MimicNode(bool isSelectable, bool isUpdatable, Listener *listener)
-    : AbstractNode(isSelectable, isUpdatable, listener) {}
+MimicNode::MimicNode(bool isSelectable, Listener *listener) : AbstractNode(isSelectable, listener) {}
 
 float MimicNode::getWidth()
 {

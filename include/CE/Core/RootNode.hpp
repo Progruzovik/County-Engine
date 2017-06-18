@@ -6,11 +6,12 @@
 
 namespace ce {
 
-class RootNode : public MimicNode
+class RootNode final : public MimicNode
 {
 public:
     RootNode(sf::RenderWindow &window);
 
+    void onMouseMoved(const sf::Vector2i &mousePosition) override;
     void onMouseLeft() override;
     void onLeftMouseButtonPressed() override;
     void onLeftMouseButtonReleased() override;
@@ -18,13 +19,15 @@ public:
 
     const sf::Window &getWindow() const override;
 
+    void update() override;
     void draw();
     void addContent(AbstractNode *content);
     void removeContent(AbstractNode *content, bool toDelete = false);
 
 private:
-    MimicNode *contentLayer = new MimicNode(true, true);
     sf::RenderWindow &window;
+    AbstractNode *selectedNode = nullptr;
+    MimicNode *contentLayer = new MimicNode();
 };
 
 }

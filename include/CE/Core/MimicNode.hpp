@@ -9,7 +9,7 @@ namespace ce {
 class MimicNode : public AbstractNode
 {
 public:
-    MimicNode(bool isSelectable = false, bool isUpdatable = false, Listener *listener = nullptr);
+    MimicNode(bool isSelectable = false, Listener *listener = nullptr);
 
     float getWidth() override;
     float getHeight() override;

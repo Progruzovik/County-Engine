@@ -1,17 +1,26 @@
 #include <CE/Core/AbstractNode.hpp>
 #include <CE/constant.hpp>
-#include <SFML/Window/Mouse.hpp>
 
 namespace ce {
 
-AbstractNode::AbstractNode(bool isSelectable, bool isUpdatable, Listener *listener)
-    : Speaker(listener), isSelectable(isSelectable), isUpdatable(isUpdatable) {}
+AbstractNode::AbstractNode(bool isSelectable, Listener *listener)
+    : Speaker(listener), isSelectable(isSelectable) {}
 
 AbstractNode::~AbstractNode()
 {
     for (auto *child : children) {
         delete child;
     }
+}
+
+void AbstractNode::onMouseEntered()
+{
+    isSelected = true;
+}
+
+void AbstractNode::onMouseLeft()
+{
+    isSelected = false;
 }
 
 bool AbstractNode::checkSelectable() const
@@ -23,11 +32,7 @@ void AbstractNode::setSelectable(bool value)
 {
     if (isSelectable != value) {
         isSelectable = value;
-        if (isSelectable && this == parent->selectedChild) {
-            onMouseEntered();
-        } else {
-            onMouseLeft();
-        }
+        onMouseLeft();
     }
 }
 
@@ -130,27 +135,10 @@ void AbstractNode::moveY(float offset)
 
 void AbstractNode::update()
 {
-    if (isUpdatable) {
-        for (auto *child : children) {
-            child->update();
-        }
-        onUpdated();
+    for (auto *child : children) {
+        child->update();
     }
-}
-
-void AbstractNode::select(const sf::Vector2i &mousePosition)
-{
-    AbstractNode *newSelectedChild = findSelectedChild(mousePosition);
-    if (selectedChild != newSelectedChild) {
-        deselectChild();
-        if (newSelectedChild) {
-            selectedChild = newSelectedChild;
-            selectedChild->onMouseEntered();
-        }
-    }
-    if (selectedChild) {
-        selectedChild->select(mousePosition);
-    }
+    onUpdated();
 }
 
 void AbstractNode::removeFromParent(bool toDelete)
@@ -169,11 +157,7 @@ void AbstractNode::removeChild(AbstractNode *child, bool toDelete)
 {
     auto it = std::find(children.begin(), children.end(), child);
     if (it != children.end()) {
-        if (toDelete) {
-            delete child;
-        } else {
-            child->setParent(nullptr);
-        }
+        child->dispose(toDelete);
         children.erase(it);
     }
 }
@@ -184,12 +168,8 @@ void AbstractNode::removeChildren(bool toDelete, unsigned long firstIndex, long 
     const auto end = lastIndex == -1 || lastIndex > children.size()
             ? children.end()
             : children.begin() + lastIndex;
-    std::for_each(begin, end, [toDelete](AbstractNode *child) {
-        if (toDelete) {
-            delete child;
-        } else {
-            child->setParent(nullptr);
-        }
+    std::for_each(begin, end, [this, toDelete](AbstractNode *child) {
+       child->dispose(toDelete);
     });
     children.erase(begin, end);
 }
@@ -199,30 +179,27 @@ void AbstractNode::onUpdated()
     declareEvent(UPDATE);
 }
 
-void AbstractNode::onLeftMouseButtonPressed()
-{
-    if (selectedChild && selectedChild->checkSelectable()) {
-        selectedChild->onLeftMouseButtonPressed();
-    }
-}
-
-void AbstractNode::onLeftMouseButtonReleased()
-{
-    if (selectedChild && selectedChild->checkSelectable()) {
-        selectedChild->onLeftMouseButtonReleased();
-    }
-}
-
-void AbstractNode::onRightMouseButtonReleased()
-{
-    if (selectedChild && selectedChild->checkSelectable()) {
-        selectedChild->onRightMouseButtonReleased();
-    }
-}
-
 const std::vector<AbstractNode *> &AbstractNode::getChildren() const
 {
     return children;
+}
+
+AbstractNode *AbstractNode::select(const sf::Vector2i &mousePosition)
+{
+    AbstractNode *selectedChild = nullptr;
+    auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](AbstractNode *child) -> bool {
+        return child->checkMouseOnIt(mousePosition);
+    });
+    if (it != children.rend()) {
+        selectedChild = (*it)->select(mousePosition);
+    }
+    if (selectedChild && selectedChild->checkSelectable()) {
+        return selectedChild;
+    }
+    if (checkSelectable()) {
+        return this;
+    }
+    return nullptr;
 }
 
 void AbstractNode::makeTransformed()
@@ -235,21 +212,17 @@ void AbstractNode::makeTransformed()
 
 bool AbstractNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
 {
-    sf::FloatRect combinedRect = getRect();
-    if (parent) {
-        combinedRect = parent->getCombinedTransform().transformRect(combinedRect);
-    }
-    return mousePosition.x > combinedRect.left && mousePosition.x < combinedRect.left + combinedRect.width
-           && mousePosition.y > combinedRect.top && mousePosition.y < combinedRect.top + combinedRect.height;
+    sf::Vector2f mouseLocalPosition = calculateMouseLocalPosition(mousePosition);
+    return mouseLocalPosition.x > 0 && mouseLocalPosition.x < getWidth()
+           && mouseLocalPosition.y > 0 && mouseLocalPosition.y < getHeight();
 }
 
-void AbstractNode::deselectChild()
+sf::Vector2f AbstractNode::calculateMouseLocalPosition(const sf::Vector2i &mousePosition)
 {
-    if (selectedChild) {
-        selectedChild->deselectChild();
-        selectedChild->onMouseLeft();
-        selectedChild = nullptr;
-    }
+    const sf::FloatRect combinedRect = parent->getCombinedTransform().transformRect(getRect());
+    const float combinedScale = combinedRect.width / getWidth();
+    return sf::Vector2f((mousePosition.x - combinedRect.left) / combinedScale,
+                        (mousePosition.y - combinedRect.top) / combinedScale);
 }
 
 void AbstractNode::drawToTarget(sf::RenderTarget &target)
@@ -259,27 +232,19 @@ void AbstractNode::drawToTarget(sf::RenderTarget &target)
     }
 }
 
-sf::Vector2f AbstractNode::calculateMouseLocalPosition()
-{
-    const sf::Vector2i mousePosition = sf::Mouse::getPosition(getWindow());
-    const sf::FloatRect combinedRect = parent->getCombinedTransform().transformRect(getRect());
-    const float combinedScale = combinedRect.width / getWidth();
-    return sf::Vector2f((mousePosition.x - combinedRect.left) / combinedScale,
-                        (mousePosition.y - combinedRect.top) / combinedScale);
-}
-
 void AbstractNode::setParent(AbstractNode *value)
 {
-    makeTransformed();
     parent = value;
+    makeTransformed();
 }
 
-AbstractNode *AbstractNode::findSelectedChild(const sf::Vector2i &mousePosition)
+void AbstractNode::dispose(bool toDelete)
 {
-    auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](AbstractNode *child) -> bool {
-        return child->checkSelectable() && child->checkMouseOnIt(mousePosition);
-    });
-    return it == children.rend() ? nullptr : *it;
+    if (toDelete) {
+        delete this;
+    } else {
+        setParent(nullptr);
+    }
 }
 
 }

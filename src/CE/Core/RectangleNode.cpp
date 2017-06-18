@@ -3,10 +3,8 @@
 
 namespace ce {
 
-RectangleNode::RectangleNode(float width, float height, const sf::Color &color,
-                             bool isSelectable, bool isUpdatable, Listener *listener)
-    : AbstractVisualNode(isSelectable, isUpdatable, listener),
-      shape(sf::RectangleShape(sf::Vector2f(width, height)))
+RectangleNode::RectangleNode(float width, float height, const sf::Color &color, bool isSelectable, Listener *listener)
+    : AbstractVisualNode(isSelectable, listener), shape(sf::RectangleShape(sf::Vector2f(width, height)))
 {
     shape.setFillColor(color);
 }

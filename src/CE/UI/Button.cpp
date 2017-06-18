@@ -1,15 +1,43 @@
 #include <CE/UI/Button.hpp>
 #include <CE/UI/Parameters.hpp>
+#include <CE/constant.hpp>
 
 namespace ce {
 
 Button::Button(Listener *listener, const sf::String &string, const sf::Vector2f &size)
     : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(),
-                    sf::Color(0x333333FF), true, false, listener),
+                    sf::Color(0x333333FF), true, listener),
       text(new Text("", Text::CHRACTER_SIZE, sf::Color::White)), size(size)
 {
     setString(string);
     addChild(text);
+}
+
+void Button::onMouseEntered()
+{
+    setState(State::MOUSE_OVER);
+    RectangleNode::onMouseEntered();
+}
+
+void Button::onMouseLeft()
+{
+    if (checkSelectable()) {
+        setState(State::DEFAULT);
+    } else {
+        setState(State::DISABLED);
+    }
+    RectangleNode::onMouseLeft();
+}
+
+void Button::onLeftMouseButtonPressed()
+{
+    setState(State::MOUSE_PRESSED);
+}
+
+void Button::onLeftMouseButtonReleased()
+{
+    setState(State::MOUSE_OVER);
+    declareEvent(CLICK);
 }
 
 const sf::String &Button::getString() const
@@ -46,31 +74,6 @@ void Button::resize()
     updateSize();
     text->resize();
     text->setOrigin(text->getHalfX(), text->getHalfY());
-}
-
-void Button::onMouseEntered()
-{
-    setState(State::MOUSE_OVER);
-}
-
-void Button::onMouseLeft()
-{
-    if (checkSelectable()) {
-        setState(State::DEFAULT);
-    } else {
-        setState(State::DISABLED);
-    }
-}
-
-void Button::onLeftMouseButtonPressed()
-{
-    setState(State::MOUSE_PRESSED);
-}
-
-void Button::onLeftMouseButtonReleased()
-{
-    setState(State::MOUSE_OVER);
-    declareEvent(CLICK);
 }
 
 void Button::setState(State state)

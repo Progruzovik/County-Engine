@@ -11,6 +11,11 @@ class Button : public RectangleNode
 public:
     Button(Listener *listener, const sf::String &string = "", const sf::Vector2f &size = sf::Vector2f(165, 40));
 
+    void onMouseEntered() override;
+    void onMouseLeft() override;
+    void onLeftMouseButtonPressed() override;
+    void onLeftMouseButtonReleased() override;
+
     const sf::String &getString() const;
     void setString(const sf::String &value = "");
     void setWidth(float value) override;
@@ -18,12 +23,6 @@ public:
     void setSize(float width, float height) override;
 
     virtual void resize();
-
-protected:
-    void onMouseEntered() override;
-    void onMouseLeft() override;
-    void onLeftMouseButtonPressed() override;
-    void onLeftMouseButtonReleased() override;
 
 private:
     enum class State { DEFAULT, MOUSE_OVER, MOUSE_PRESSED, DISABLED };

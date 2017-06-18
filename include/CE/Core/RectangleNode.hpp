@@ -10,7 +10,7 @@ class RectangleNode : public AbstractVisualNode
 {
 public:
     RectangleNode(float width, float height, const sf::Color &color = sf::Color::White,
-                  bool isSelectable = false, bool isUpdatable = false, Listener *listener = nullptr);
+                  bool isSelectable = false, Listener *listener = nullptr);
 
     void setAlpha(float value) override;
     float getWidth() override;
