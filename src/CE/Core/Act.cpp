@@ -118,16 +118,9 @@ void Act::update()
         }
         content->move(offset.x, offset.y);
     } else if (contentMode == Mode::CENTERED_ON_NODE) {
-        sf::Vector2u windowSize = root.getWindow().getSize();
-        sf::Vector2f offset((center->getHalfX() - content->getOriginX()) * content->getScale(),
-                            (center->getHalfY() - content->getOriginY()) * content->getScale());
-        AbstractNode *currentNode = center;
-        while (currentNode != content) {
-            offset.x += (currentNode->getX() - currentNode->getOriginX()) * content->getScale();
-            offset.y += (currentNode->getY() - currentNode->getOriginY()) * content->getScale();
-            currentNode = currentNode->getParent();
-        }
-        content->setPos(windowSize.x / 2 - offset.x, windowSize.y / 2 - offset.y);
+        sf::Vector2f offset = center->getCombinedTransform().transformPoint(0, 0);
+        content->setPos(root.getWindow().getSize().x / 2 + content->getX() - offset.x,
+                        root.getWindow().getSize().y / 2 + content->getY() - offset.y);
     }
 
     root.draw();
