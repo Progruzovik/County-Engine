@@ -2,60 +2,68 @@
 #define CE_ACT_HPP
 
 #include <CE/Event/Speaker.hpp>
-#include <CE/Core/RootNode.hpp>
+#include <CE/Core/MimicNode.hpp>
 #include <CE/Core/Stage.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace ce {
 
-class Act : public Speaker
+class Act : public Node, public Speaker
 {
 public:
     enum class Mode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
 
     Act(Stage *stage, Mode contentMode, const sf::Color &bgColor = sf::Color::Black);
 
-    void onMouseMoved(const sf::Vector2i &mousePosition);
-    void onMouseLeft();
-    void onLeftMouseButtonPressed();
-    void onLeftMouseButtonReleased();
+    void onMouseMoved(const sf::Vector2i &mousePosition) override;
+    void onMouseLeft() override;
+    void onLeftMouseButtonPressed() override;
+    void onLeftMouseButtonReleased() override;
     void onRightMouseButtonPressed();
-    void onRightMouseButtonReleased();
+    void onRightMouseButtonReleased() override;
     virtual void onKeyReleased(sf::Keyboard::Key key) {}
 
     const sf::Color &getBgColor() const;
-    void setCenter(AbstractNode *value);
-    void setContent(AbstractNode *value);
-    void setLeftUi(AbstractNode *value);
-    void setRightUi(AbstractNode *value);
-    void setTopUi(AbstractNode *value);
-    void setBottomUi(AbstractNode *value);
+    const sf::Transform &getCombinedTransform() override;
+    const sf::Window &getWindow() const override;
+
+    void setCenter(TransformableNode *value);
+    void setContent(TransformableNode *value);
+    void setLeftUi(TransformableNode *value);
+    void setRightUi(TransformableNode *value);
+    void setTopUi(TransformableNode *value);
+    void setBottomUi(TransformableNode *value);
 
     virtual void setUpNodes();
-    void update();
+    void update() override;
 
 protected:
     sf::Color bgColor;
-    RootNode root;
 
+    bool checkPointOnIt(const sf::Vector2i &point) override;
     virtual void resizeUi() {}
 
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
 
+    const sf::Transform mockTransform;
     Mode contentMode;
     sf::Vector2i savedMousePosition;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
+    sf::RenderWindow &window;
 
-    AbstractNode *center = nullptr;
-    AbstractNode *content = nullptr;
-    AbstractNode *leftUi = nullptr;
-    AbstractNode *rightUi = nullptr;
-    AbstractNode *topUi = nullptr;
-    AbstractNode *bottomUi = nullptr;
+    Node *selectedNode = nullptr;
+    MimicNode *contentLayer = new MimicNode();
 
-    void updateUi(AbstractNode *oldUi, AbstractNode *newUi);
+    TransformableNode *center = nullptr;
+    TransformableNode *content = nullptr;
+    TransformableNode *leftUi = nullptr;
+    TransformableNode *rightUi = nullptr;
+    TransformableNode *topUi = nullptr;
+    TransformableNode *bottomUi = nullptr;
+
+    void updateUi(TransformableNode *oldUi, TransformableNode *newUi);
 };
 
 }

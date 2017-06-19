@@ -1,14 +1,14 @@
-#ifndef CE_ABSTRACTVISUALNODE_HPP
-#define CE_ABSTRACTVISUALNODE_HPP
+#ifndef CE_VISUALNODE_HPP
+#define CE_VISUALNODE_HPP
 
-#include <CE/Core/AbstractNode.hpp>
+#include <CE/Core/TransformableNode.hpp>
 
 namespace ce {
 
-class AbstractVisualNode : public AbstractNode
+class VisualNode : public TransformableNode
 {
 public:
-    AbstractVisualNode(bool isSelectable = false);
+    VisualNode(bool isSelectable = false);
 
     virtual void setAlpha(float value) = 0;
     void drawToTarget(sf::RenderTarget &target) override;

@@ -50,15 +50,15 @@ void Text::setScale(float value)
     makeTransformed();
 }
 
+sf::FloatRect Text::getRect()
+{
+    return text.getGlobalBounds();
+}
+
 void Text::setRotation(float value)
 {
     text.setRotation(value * 180 / MATH_PI);
     makeTransformed();
-}
-
-sf::FloatRect Text::getRect()
-{
-    return text.getGlobalBounds();
 }
 
 void Text::setOrigin(float x, float y)

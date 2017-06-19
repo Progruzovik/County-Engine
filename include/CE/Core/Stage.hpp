@@ -11,21 +11,20 @@ class Act;
 class Stage : public sf::RenderWindow, public Listener
 {
 public:
-    Stage(const sf::VideoMode &mode, const sf::String &title, Act *currentAct);
+    Stage(const sf::VideoMode &mode, const sf::String &title);
     ~Stage() override;
 
     void onEvent(Speaker *speaker, const sf::String &name) override {}
+    void setAct(Act *value);
+    const Act *getAct() const;
     void start();
 
 protected:
-    Act *currentAct;
-
     virtual void update();
 
 private:
     sf::View view;
-
-    void updateView();
+    Act *act = nullptr;
 };
 
 }

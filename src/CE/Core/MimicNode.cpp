@@ -3,12 +3,12 @@
 
 namespace ce {
 
-MimicNode::MimicNode(bool isSelectable) : AbstractNode(isSelectable) {}
+MimicNode::MimicNode(bool isSelectable) : TransformableNode(isSelectable) {}
 
 float MimicNode::getWidth()
 {
     float width = 0;
-    for (auto *child : getChildren()) {
+    for (auto *child : children) {
         float nextWidth = child->getX() - child->getOriginX() + child->getWidth() * child->getScale();
         if (nextWidth > width) {
             width = nextWidth;
@@ -20,7 +20,7 @@ float MimicNode::getWidth()
 float MimicNode::getHeight()
 {
     float height = 0;
-    for (auto *child : getChildren()) {
+    for (auto *child : children) {
         float nextHeight = child->getY() - child->getOriginY() + child->getHeight() * child->getScale();
         if (nextHeight > height) {
             height = nextHeight;
@@ -35,15 +35,15 @@ void MimicNode::setScale(float value)
     makeTransformed();
 }
 
+sf::FloatRect MimicNode::getRect()
+{
+    return transformable.getTransform().transformRect(sf::FloatRect(0, 0, getWidth(), getHeight()));
+}
+
 void MimicNode::setRotation(float value)
 {
     transformable.setRotation(value * 180 / MATH_PI);
     makeTransformed();
-}
-
-sf::FloatRect MimicNode::getRect()
-{
-    return transformable.getTransform().transformRect(sf::FloatRect(0, 0, getWidth(), getHeight()));
 }
 
 void MimicNode::setOrigin(float x, float y)

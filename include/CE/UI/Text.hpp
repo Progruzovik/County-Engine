@@ -1,12 +1,12 @@
 #ifndef CE_TEXT_HPP
 #define CE_TEXT_HPP
 
-#include <CE/Core/AbstractVisualNode.hpp>
+#include <CE/Core/VisualNode.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 namespace ce {
 
-class Text : public AbstractVisualNode
+class Text : public VisualNode
 {
 public:
     static constexpr unsigned int CHRACTER_SIZE = 18;
@@ -17,14 +17,13 @@ public:
 
     const sf::String &getString() const;
     void setString(const sf::String &value);
-
     void setAlpha(float value) override;
+
     float getWidth() override;
     float getHeight() override;
     void setScale(float value) override;
-
-    void setRotation(float value) override;
     sf::FloatRect getRect() override;
+    void setRotation(float value) override;
 
     void setOrigin(float x, float y) override;
     void setPos(float x, float y) override;

@@ -6,18 +6,16 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES
         src/CE/Core/Act.cpp
         include/CE/Core/Act.hpp
-        src/CE/Core/AbstractNode.cpp
-        include/CE/Core/AbstractNode.hpp
-        src/CE/Core/AbstractVisualNode.cpp
-        include/CE/Core/AbstractVisualNode.hpp
+        src/CE/Core/Node.cpp
+        include/CE/Core/Node.hpp
+        src/CE/Core/VisualNode.cpp
+        include/CE/Core/VisualNode.hpp
         src/CE/Core/CircleNode.cpp
         include/CE/Core/CircleNode.hpp
         src/CE/Core/MimicNode.cpp
         include/CE/Core/MimicNode.hpp
         src/CE/Core/RectangleNode.cpp
         include/CE/Core/RectangleNode.hpp
-        src/CE/Core/RootNode.cpp
-        include/CE/Core/RootNode.hpp
         src/CE/Core/SpriteNode.cpp
         include/CE/Core/SpriteNode.hpp
         src/CE/Core/Stage.cpp
@@ -33,7 +31,9 @@ set(SOURCE_FILES
         include/CE/UI/ProgressBar.hpp
         src/CE/UI/Text.cpp
         include/CE/UI/Text.hpp
-        include/CE/constant.hpp)
+        include/CE/constant.hpp
+        src/CE/Core/TransformableNode.cpp
+        include/CE/Core/TransformableNode.hpp)
 
 add_library(county STATIC ${SOURCE_FILES})
 

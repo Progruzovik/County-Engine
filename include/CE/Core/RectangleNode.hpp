@@ -1,12 +1,12 @@
 #ifndef CE_RECTANGLENODE_HPP
 #define CE_RECTANGLENODE_HPP
 
-#include <CE/Core/AbstractVisualNode.hpp>
+#include <CE/Core/VisualNode.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace ce {
 
-class RectangleNode : public AbstractVisualNode
+class RectangleNode : public VisualNode
 {
 public:
     RectangleNode(float width, float height, const sf::Color &color = sf::Color::White, bool isSelectable = false);
@@ -17,9 +17,8 @@ public:
     float getHeight() override;
     virtual void setHeight(float value);
     void setScale(float scale) override;
-
-    void setRotation(float value) override;
     sf::FloatRect getRect() override;
+    void setRotation(float value) override;
 
     virtual void setSize(float width, float height);
     void setOrigin(float x, float y) override;

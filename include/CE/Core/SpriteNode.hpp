@@ -1,12 +1,12 @@
 #ifndef CE_SPRITENODE_HPP
 #define CE_SPRITENODE_HPP
 
-#include <CE/Core/AbstractVisualNode.hpp>
+#include <CE/Core/VisualNode.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace ce {
 
-class SpriteNode : public AbstractVisualNode
+class SpriteNode : public VisualNode
 {
 public:
     SpriteNode(const sf::Texture &texture, bool isSelectable = false);
@@ -15,9 +15,8 @@ public:
     float getWidth() override;
     float getHeight() override;
     void setScale(float value) override;
-
-    void setRotation(float value) override;
     sf::FloatRect getRect() override;
+    void setRotation(float value) override;
 
     void setOrigin(float x, float y) override;
     void setPos(float x, float y) override;

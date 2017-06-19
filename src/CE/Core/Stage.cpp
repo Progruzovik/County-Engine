@@ -5,18 +5,28 @@
 
 namespace ce {
 
-Stage::Stage(const sf::VideoMode &mode, const sf::String &title, Act *currentAct)
-    : sf::RenderWindow(mode, title), currentAct(currentAct), view(sf::FloatRect(0, 0, mode.width, mode.height))
+Stage::Stage(const sf::VideoMode &mode, const sf::String &title)
+    : sf::RenderWindow(mode, title), view(sf::FloatRect(0, 0, mode.width, mode.height))
 {
     setVerticalSyncEnabled(true);
-    updateView();
+    setView(view);
 }
 
 Stage::~Stage()
 {
-    if (currentAct) {
-        delete currentAct;
+    if (act) {
+        delete act;
     }
+}
+
+void Stage::setAct(Act *value)
+{
+    act = value;
+}
+
+const Act *Stage::getAct() const
+{
+    return act;
 }
 
 void Stage::start()
@@ -33,39 +43,34 @@ void Stage::update()
         if (event.type == sf::Event::Resized) {
             Parameters::get().update(event.size.width, event.size.height);
             view.reset(sf::FloatRect(0, 0, event.size.width, event.size.height));
-            updateView();
+            setView(view);
+            act->setUpNodes();
         } else if (event.type == sf::Event::MouseMoved) {
-            currentAct->onMouseMoved(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+            act->onMouseMoved(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
         } else if (event.type == sf::Event::MouseLeft) {
-            currentAct->onMouseLeft();
+            act->onMouseLeft();
         } else if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                currentAct->onLeftMouseButtonPressed();
+                act->onLeftMouseButtonPressed();
             } else if (event.mouseButton.button == sf::Mouse::Right) {
-                currentAct->onRightMouseButtonPressed();
+                act->onRightMouseButtonPressed();
             }
         } else if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                currentAct->onLeftMouseButtonReleased();
+                act->onLeftMouseButtonReleased();
             } else if (event.mouseButton.button == sf::Mouse::Right) {
-                currentAct->onRightMouseButtonReleased();
+                act->onRightMouseButtonReleased();
             }
         } else if (event.type == sf::Event::KeyReleased) {
-            currentAct->onKeyReleased(event.key.code);
+            act->onKeyReleased(event.key.code);
         } else if (event.type == sf::Event::Closed) {
             close();
         }
     }
 
-    clear(currentAct->getBgColor());
-    currentAct->update();
+    clear(act->getBgColor());
+    act->update();
     display();
-}
-
-void Stage::updateView()
-{
-    setView(view);
-    currentAct->setUpNodes();
 }
 
 }

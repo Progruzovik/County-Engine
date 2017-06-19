@@ -1,12 +1,12 @@
 #ifndef CE_MIMICNODE_HPP
 #define CE_MIMICNODE_HPP
 
-#include <CE/Core/AbstractNode.hpp>
+#include <CE/Core/TransformableNode.hpp>
 #include <CE/Event/Listener.hpp>
 
 namespace ce {
 
-class MimicNode : public AbstractNode
+class MimicNode : public TransformableNode
 {
 public:
     MimicNode(bool isSelectable = false);
@@ -14,9 +14,8 @@ public:
     float getWidth() override;
     float getHeight() override;
     void setScale(float value) override;
-
-    void setRotation(float value) override;
     sf::FloatRect getRect() override;
+    void setRotation(float value) override;
 
     void setOrigin(float x, float y) override;
     void setPos(float x, float y) override;

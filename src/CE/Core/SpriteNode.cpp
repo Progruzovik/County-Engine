@@ -4,7 +4,7 @@
 
 namespace ce {
 
-SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable) : AbstractVisualNode(isSelectable)
+SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable) : VisualNode(isSelectable)
 {
     sprite.setTexture(texture);
 }
@@ -31,15 +31,15 @@ void SpriteNode::setScale(float value)
     makeTransformed();
 }
 
+sf::FloatRect SpriteNode::getRect()
+{
+    return sprite.getGlobalBounds();
+}
+
 void SpriteNode::setRotation(float value)
 {
     sprite.setRotation(value * 180 / MATH_PI);
     makeTransformed();
-}
-
-sf::FloatRect SpriteNode::getRect()
-{
-    return sprite.getGlobalBounds();
 }
 
 void SpriteNode::setOrigin(float x, float y)

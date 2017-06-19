@@ -4,7 +4,7 @@
 namespace ce {
 
 RectangleNode::RectangleNode(float width, float height, const sf::Color &color, bool isSelectable)
-    : AbstractVisualNode(isSelectable), shape(sf::RectangleShape(sf::Vector2f(width, height)))
+    : VisualNode(isSelectable), shape(sf::RectangleShape(sf::Vector2f(width, height)))
 {
     shape.setFillColor(color);
 }
@@ -41,15 +41,15 @@ void RectangleNode::setScale(float scale)
     makeTransformed();
 }
 
+sf::FloatRect RectangleNode::getRect()
+{
+    return shape.getGlobalBounds();
+}
+
 void RectangleNode::setRotation(float value)
 {
     shape.setRotation(value * 180 / MATH_PI);
     makeTransformed();
-}
-
-sf::FloatRect RectangleNode::getRect()
-{
-    return shape.getGlobalBounds();
 }
 
 void RectangleNode::setSize(float width, float height)

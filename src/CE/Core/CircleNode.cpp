@@ -4,7 +4,7 @@
 namespace ce {
 
 CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable)
-    : AbstractVisualNode(isSelectable), shape(sf::CircleShape(radius))
+    : VisualNode(isSelectable), shape(sf::CircleShape(radius))
 {
     shape.setOrigin(radius, radius);
     shape.setFillColor(color);
@@ -37,15 +37,15 @@ void CircleNode::setScale(float value)
     makeTransformed();
 }
 
+sf::FloatRect CircleNode::getRect()
+{
+    return shape.getGlobalBounds();
+}
+
 void CircleNode::setRotation(float value)
 {
     shape.setRotation(value);
     makeTransformed();
-}
-
-sf::FloatRect CircleNode::getRect()
-{
-    return shape.getGlobalBounds();
 }
 
 void CircleNode::setOrigin(float x, float y)
@@ -82,9 +82,9 @@ const sf::Drawable &CircleNode::getDrawable() const
     return shape;
 }
 
-bool CircleNode::checkMouseOnIt(const sf::Vector2i &mousePosition)
+bool CircleNode::checkPointOnIt(const sf::Vector2i &point)
 {
-    sf::Vector2f mouseLocalPosition = calculateMouseLocalPosition(mousePosition);
+    sf::Vector2f mouseLocalPosition = translatePointToLocalCoordinates(point);
     mouseLocalPosition.x -= shape.getRadius();
     mouseLocalPosition.y -= shape.getRadius();
     return std::sqrt(mouseLocalPosition.x * mouseLocalPosition.x + mouseLocalPosition.y * mouseLocalPosition.y)
