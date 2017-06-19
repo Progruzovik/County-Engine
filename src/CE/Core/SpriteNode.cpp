@@ -4,8 +4,7 @@
 
 namespace ce {
 
-SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable, Listener *listener)
-    : AbstractVisualNode(isSelectable, listener)
+SpriteNode::SpriteNode(const sf::Texture &texture, bool isSelectable) : AbstractVisualNode(isSelectable)
 {
     sprite.setTexture(texture);
 }

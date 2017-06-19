@@ -9,7 +9,7 @@ namespace ce {
 class SpriteNode : public AbstractVisualNode
 {
 public:
-    SpriteNode(const sf::Texture &texture, bool isSelectable = false, Listener *listener = nullptr);
+    SpriteNode(const sf::Texture &texture, bool isSelectable = false);
 
     void setAlpha(float value) override;
     float getWidth() override;

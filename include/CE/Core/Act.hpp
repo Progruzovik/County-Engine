@@ -1,6 +1,7 @@
 #ifndef CE_ACT_HPP
 #define CE_ACT_HPP
 
+#include <CE/Event/Speaker.hpp>
 #include <CE/Core/RootNode.hpp>
 #include <CE/Core/Stage.hpp>
 #include <SFML/Window/Keyboard.hpp>

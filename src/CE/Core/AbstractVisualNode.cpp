@@ -2,8 +2,7 @@
 
 namespace ce {
 
-AbstractVisualNode::AbstractVisualNode(bool isSelectable, Listener *listener)
-    : AbstractNode(isSelectable, listener) {}
+AbstractVisualNode::AbstractVisualNode(bool isSelectable) : AbstractNode(isSelectable) {}
 
 void AbstractVisualNode::drawToTarget(sf::RenderTarget &target)
 {

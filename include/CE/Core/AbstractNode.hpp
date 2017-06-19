@@ -1,22 +1,21 @@
 #ifndef CE_ABSTRACTNODE_HPP
 #define CE_ABSTRACTNODE_HPP
 
-#include <CE/Event/Speaker.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Window.hpp>
 
 namespace ce {
 
-class AbstractNode : public Speaker
+class AbstractNode
 {
 public:
-    AbstractNode(bool isSelectable = false, Listener *listener = nullptr);
-    ~AbstractNode() override;
+    AbstractNode(bool isSelectable = false);
+    virtual ~AbstractNode();
 
-    virtual void onMouseEntered();
+    virtual void onMouseEntered() {}
     virtual void onMouseMoved(const sf::Vector2i &mousePosition) {}
-    virtual void onMouseLeft();
+    virtual void onMouseLeft() {}
     virtual void onLeftMouseButtonPressed() {}
     virtual void onLeftMouseButtonReleased() {}
     virtual void onRightMouseButtonReleased() {}
@@ -60,13 +59,13 @@ public:
     void removeChildren(bool toDelete = false, unsigned long firstIndex = 0, long lastIndex = -1);
 
 protected:
-    virtual void onAdded() {};
-    virtual void onUpdated();
+    virtual void onAdded() {}
+    virtual void onUpdated() {}
 
     virtual const sf::Transformable &getTransformable() const = 0;
     const std::vector<AbstractNode *> &getChildren() const;
 
-    virtual AbstractNode *select(const sf::Vector2i &mousePosition);
+    AbstractNode *select(const sf::Vector2i &mousePosition);
     virtual void update();
 
     void makeTransformed();
@@ -76,7 +75,6 @@ protected:
 
 private:
     bool isSelectable;
-    bool isSelected = false;
     bool isTransformed = true;
     sf::Transform combinedTransform;
 

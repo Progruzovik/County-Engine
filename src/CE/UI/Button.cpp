@@ -5,9 +5,8 @@
 namespace ce {
 
 Button::Button(Listener *listener, const sf::String &string, const sf::Vector2f &size)
-    : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(),
-                    sf::Color(0x333333FF), true, listener),
-      text(new Text("", Text::CHRACTER_SIZE, sf::Color::White)), size(size)
+    : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(), sf::Color(0x333333FF), true),
+      Speaker(listener), text(new Text("", Text::CHRACTER_SIZE, sf::Color::White)), size(size)
 {
     setString(string);
     addChild(text);

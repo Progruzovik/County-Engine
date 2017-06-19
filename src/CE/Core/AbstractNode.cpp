@@ -3,24 +3,13 @@
 
 namespace ce {
 
-AbstractNode::AbstractNode(bool isSelectable, Listener *listener)
-    : Speaker(listener), isSelectable(isSelectable) {}
+AbstractNode::AbstractNode(bool isSelectable) : isSelectable(isSelectable) {}
 
 AbstractNode::~AbstractNode()
 {
     for (auto *child : children) {
         delete child;
     }
-}
-
-void AbstractNode::onMouseEntered()
-{
-    isSelected = true;
-}
-
-void AbstractNode::onMouseLeft()
-{
-    isSelected = false;
 }
 
 bool AbstractNode::checkSelectable() const
@@ -172,11 +161,6 @@ void AbstractNode::removeChildren(bool toDelete, unsigned long firstIndex, long 
        child->dispose(toDelete);
     });
     children.erase(begin, end);
-}
-
-void AbstractNode::onUpdated()
-{
-    declareEvent(UPDATE);
 }
 
 const std::vector<AbstractNode *> &AbstractNode::getChildren() const

@@ -3,8 +3,8 @@
 
 namespace ce {
 
-CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable, Listener *listener)
-    : AbstractVisualNode(isSelectable, listener), shape(sf::CircleShape(radius))
+CircleNode::CircleNode(float radius, const sf::Color &color, bool isSelectable)
+    : AbstractVisualNode(isSelectable), shape(sf::CircleShape(radius))
 {
     shape.setOrigin(radius, radius);
     shape.setFillColor(color);

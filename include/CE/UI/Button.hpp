@@ -2,11 +2,12 @@
 #define CE_BUTTON_HPP
 
 #include <CE/Core/RectangleNode.hpp>
+#include <CE/Event/Speaker.hpp>
 #include <CE/UI/Text.hpp>
 
 namespace ce {
 
-class Button : public RectangleNode
+class Button : public RectangleNode, public Speaker
 {
 public:
     Button(Listener *listener, const sf::String &string = "", const sf::Vector2f &size = sf::Vector2f(165, 40));
