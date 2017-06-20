@@ -41,7 +41,6 @@ protected:
     sf::Color bgColor;
 
     bool checkPointOnIt(const sf::Vector2i &point) override;
-    virtual void resizeUi() {}
 
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
@@ -64,6 +63,7 @@ private:
     TransformableNode *bottomUi = nullptr;
 
     void updateUi(TransformableNode *oldUi, TransformableNode *newUi);
+    virtual void resizeUi() {}
 };
 
 }

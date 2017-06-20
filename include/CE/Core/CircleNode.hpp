@@ -28,9 +28,11 @@ public:
 protected:
     sf::CircleShape shape;
 
+    bool checkPointOnIt(const sf::Vector2i &point) override;
+
+private:
     const sf::Transformable &getTransformable() const override;
     const sf::Drawable &getDrawable() const override;
-    bool checkPointOnIt(const sf::Vector2i &point) override;
 };
 
 }

@@ -72,6 +72,15 @@ void CircleNode::move(float offsetX, float offsetY)
     makeTransformed();
 }
 
+bool CircleNode::checkPointOnIt(const sf::Vector2i &point)
+{
+    sf::Vector2f mouseLocalPosition = translatePointToLocalCoordinates(point);
+    mouseLocalPosition.x -= shape.getRadius();
+    mouseLocalPosition.y -= shape.getRadius();
+    return std::sqrt(mouseLocalPosition.x * mouseLocalPosition.x + mouseLocalPosition.y * mouseLocalPosition.y)
+           <= shape.getRadius();
+}
+
 const sf::Transformable &CircleNode::getTransformable() const
 {
     return shape;
@@ -80,15 +89,6 @@ const sf::Transformable &CircleNode::getTransformable() const
 const sf::Drawable &CircleNode::getDrawable() const
 {
     return shape;
-}
-
-bool CircleNode::checkPointOnIt(const sf::Vector2i &point)
-{
-    sf::Vector2f mouseLocalPosition = translatePointToLocalCoordinates(point);
-    mouseLocalPosition.x -= shape.getRadius();
-    mouseLocalPosition.y -= shape.getRadius();
-    return std::sqrt(mouseLocalPosition.x * mouseLocalPosition.x + mouseLocalPosition.y * mouseLocalPosition.y)
-           <= shape.getRadius();
 }
 
 }

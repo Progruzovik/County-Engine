@@ -29,6 +29,7 @@ public:
 protected:
     sf::RectangleShape shape;
 
+private:
     const sf::Transformable &getTransformable() const override;
     const sf::Drawable &getDrawable() const override;
 };

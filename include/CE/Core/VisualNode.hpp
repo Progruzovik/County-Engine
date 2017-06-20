@@ -13,7 +13,7 @@ public:
     virtual void setAlpha(float value) = 0;
     void drawToTarget(sf::RenderTarget &target) override;
 
-protected:
+private:
     virtual const sf::Drawable &getDrawable() const = 0;
 };
 

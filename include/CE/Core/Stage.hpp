@@ -19,12 +19,12 @@ public:
     const Act *getAct() const;
     void start();
 
-protected:
-    virtual void update();
-
 private:
     sf::View view;
     Act *act = nullptr;
+
+    virtual void onUpdated() {}
+    void update();
 };
 
 }

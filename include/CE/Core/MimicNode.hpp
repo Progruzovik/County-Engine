@@ -22,11 +22,10 @@ public:
     void rotate(float angle) override;
     void move(float offsetX, float offsetY) override;
 
-protected:
-    const sf::Transformable &getTransformable() const override;
-
 private:
     sf::Transformable transformable;
+
+    const sf::Transformable &getTransformable() const override;
 };
 
 }

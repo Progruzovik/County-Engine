@@ -38,6 +38,8 @@ void Stage::start()
 
 void Stage::update()
 {
+    onUpdated();
+
     sf::Event event;
     while (pollEvent(event)) {
         if (event.type == sf::Event::Resized) {

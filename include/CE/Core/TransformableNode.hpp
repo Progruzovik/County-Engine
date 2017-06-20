@@ -41,8 +41,6 @@ public:
     void removeFromParent(bool toDelete = false);
 
 protected:
-    virtual const sf::Transformable &getTransformable() const = 0;
-
     bool checkPointOnIt(const sf::Vector2i &point) override;
     sf::Vector2f translatePointToLocalCoordinates(const sf::Vector2i &point);
     void makeTransformed() override;
@@ -50,6 +48,8 @@ protected:
 private:
     bool isTransformed = true;
     sf::Transform combinedTransform;
+
+    virtual const sf::Transformable &getTransformable() const = 0;
 };
 
 }

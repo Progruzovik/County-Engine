@@ -36,13 +36,8 @@ public:
 protected:
     std::vector<TransformableNode *> children;
 
-    virtual void onAdded() {}
-    virtual void onUpdated() {}
-
     Node *select(const sf::Vector2i &mousePosition);
     virtual void update();
-
-    virtual void makeTransformed() {}
     virtual bool checkPointOnIt(const sf::Vector2i &point) = 0;
     virtual void drawToTarget(sf::RenderTarget &target);
 
@@ -50,7 +45,12 @@ private:
     bool isSelectable;
     Node *parent = nullptr;
 
+    virtual void onAdded() {}
+    virtual void onUpdated() {}
+
     void setParent(Node *value);
+    virtual void makeTransformed() {}
+
     void dispose(bool toDelete);
 };
 
