@@ -39,6 +39,7 @@ protected:
     Node *select(const sf::Vector2i &mousePosition);
     virtual void update();
     virtual bool checkPointOnIt(const sf::Vector2i &point) = 0;
+    virtual void makeTransformed() {}
     virtual void drawToTarget(sf::RenderTarget &target);
 
 private:
@@ -49,8 +50,6 @@ private:
     virtual void onUpdated() {}
 
     void setParent(Node *value);
-    virtual void makeTransformed() {}
-
     void dispose(bool toDelete);
 };
 
