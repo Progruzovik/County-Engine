@@ -69,6 +69,11 @@ void TransformableNode::setY(float value)
     setPos(getX(), value);
 }
 
+const sf::Vector2f& TransformableNode::getPos() const
+{
+    return getTransformable().getPosition();
+}
+
 const sf::Transform &TransformableNode::getCombinedTransform()
 {
     if (isTransformed) {

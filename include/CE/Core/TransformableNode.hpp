@@ -28,6 +28,7 @@ public:
     void setX(float value);
     float getY() const;
     void setY(float value);
+    const sf::Vector2f &getPos() const;
 
     virtual const sf::Transform &getCombinedTransform() override;
 
