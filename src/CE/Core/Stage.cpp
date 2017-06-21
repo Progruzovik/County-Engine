@@ -19,8 +19,11 @@ Stage::~Stage()
     }
 }
 
-void Stage::setAct(Act *value)
+void Stage::setAct(Act *value, bool deletePrevious)
 {
+    if (deletePrevious && act) {
+        delete act;
+    }
     act = value;
 }
 
