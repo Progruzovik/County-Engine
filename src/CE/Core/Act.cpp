@@ -126,41 +126,38 @@ void Act::setLeftUi(TransformableNode *value)
 {
     updateUi(leftUi, value);
     leftUi = value;
-    setUpNodes();
 }
 
 void Act::setRightUi(TransformableNode *value)
 {
     updateUi(rightUi, value);
     rightUi = value;
-    setUpNodes();
 }
 
 void Act::setTopUi(TransformableNode *value)
 {
     updateUi(topUi, value);
     topUi = value;
-    setUpNodes();
 }
 
 void Act::setBottomUi(TransformableNode *value)
 {
     updateUi(bottomUi, value);
     bottomUi = value;
-    setUpNodes();
 }
 
 void Act::setUpNodes()
 {
+    resizeUi();
     const float fullLeftIndent = leftUi ? leftUi->getWidth() : 0;
     const float fullTopIndent = topUi ? topUi->getHeight() : 0;
 
-    float freeWidth = window.getSize().x - fullLeftIndent;
     if (leftUi) {
         leftUi->setY(fullTopIndent);
     }
+    float freeWidth = window.getSize().x - fullLeftIndent;
     if (rightUi) {
-        rightUi->setPos(window.getSize().x - rightUi->getWidth(), fullTopIndent);
+        rightUi->setPos(window.getSize().x - rightUi->getWidth(), fullTopIndent); //rightUi->getWidth()!!! 330 vs 165
         freeWidth -= rightUi->getWidth();
     }
 
@@ -173,20 +170,17 @@ void Act::setUpNodes()
         freeHeight -= bottomUi->getHeight();
     }
 
-    if (content) {
-        if (contentMode == Mode::STATIC) {
-            content->setScale(std::min(freeWidth / content->getWidth(), freeHeight / content->getHeight()));
-            content->setOrigin(content->getHalfX(), content->getHalfY());
-            content->setPos(fullLeftIndent + freeWidth / 2, fullTopIndent + freeHeight / 2);
-        } else {
-            content->setScale(Parameters::get().getK());
-        }
+    if (contentMode == Mode::STATIC) {
+        contentLayer->setScale(std::min(freeWidth / contentLayer->getWidth(), freeHeight / contentLayer->getHeight()));
+        contentLayer->setOrigin(contentLayer->getHalfX(), contentLayer->getHalfY());
+        contentLayer->setPos(fullLeftIndent + freeWidth / 2, fullTopIndent + freeHeight / 2);
+    } else {
+        contentLayer->setScale(Parameters::get().getK());
     }
 }
 
 void Act::update()
 {
-    resizeUi();
     Node::update();
 
     if (contentMode == Mode::MOVABLE_BY_MOUSE) {
@@ -202,11 +196,10 @@ void Act::update()
         } else if (savedMousePosition.y > window.getSize().y - activeArea) {
             offset.y -= SCROLL_SPEED * Parameters::get().getK();
         }
-        content->move(offset.x, offset.y);
+        contentLayer->move(offset.x, offset.y);
     } else if (contentMode == Mode::CENTERED_ON_NODE) {
         sf::Vector2f offset = center->getCombinedTransform().transformPoint(0, 0);
-        content->setPos(window.getSize().x / 2 + content->getX() - offset.x,
-                        window.getSize().y / 2 + content->getY() - offset.y);
+        contentLayer->move(window.getSize().x / 2 - offset.x, window.getSize().y / 2 - offset.y);
     }
 
     drawToTarget(window);
