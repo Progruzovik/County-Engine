@@ -15,7 +15,7 @@ public:
     ~Stage() override;
 
     void onEvent(Speaker *speaker, const sf::String &name) override {}
-    void setAct(Act *value, bool deletePrevious = false);
+    void setAct(Act *value, bool deleteOld = false);
     const Act *getAct() const;
     void start();
 

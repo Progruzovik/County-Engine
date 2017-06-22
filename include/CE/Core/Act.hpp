@@ -28,11 +28,12 @@ public:
     const sf::Window &getWindow() const override;
 
     void setCenter(TransformableNode *value);
-    void setContent(TransformableNode *value);
-    void setLeftUi(TransformableNode *value);
-    void setRightUi(TransformableNode *value);
-    void setTopUi(TransformableNode *value);
-    void setBottomUi(TransformableNode *value);
+    void setContent(TransformableNode *value, bool deleteOld = false);
+    void setLeftUi(TransformableNode *value, bool deleteOld = false);
+    void setRightUi(TransformableNode *value, bool deleteOld = false);
+    void setTopUi(TransformableNode *value, bool deleteOld = false);
+    void setBottomUi(TransformableNode *value, bool deleteOld = false);
+    void setOverlayUi(TransformableNode *value, bool deleteOld = false);
 
     virtual void setUpNodes();
     void update() override;
@@ -61,8 +62,9 @@ private:
     TransformableNode *rightUi = nullptr;
     TransformableNode *topUi = nullptr;
     TransformableNode *bottomUi = nullptr;
+    TransformableNode *overlayUi = nullptr;
 
-    void updateUi(TransformableNode *oldUi, TransformableNode *newUi);
+    void updateUi(TransformableNode *oldUi, TransformableNode *newUi, bool deleteOld);
     virtual void resizeUi() {}
 };
 

@@ -112,38 +112,44 @@ void Act::setCenter(TransformableNode *value)
     center = value;
 }
 
-void Act::setContent(TransformableNode *value)
+void Act::setContent(TransformableNode *value, bool deleteOld)
 {
     if (content) {
-        contentLayer->removeChild(content);
+        contentLayer->removeChild(content, deleteOld);
     }
     content = value;
     contentLayer->addChild(content);
     setUpNodes();
 }
 
-void Act::setLeftUi(TransformableNode *value)
+void Act::setLeftUi(TransformableNode *value, bool deleteOld)
 {
-    updateUi(leftUi, value);
+    updateUi(leftUi, value, deleteOld);
     leftUi = value;
 }
 
-void Act::setRightUi(TransformableNode *value)
+void Act::setRightUi(TransformableNode *value, bool deleteOld)
 {
-    updateUi(rightUi, value);
+    updateUi(rightUi, value, deleteOld);
     rightUi = value;
 }
 
-void Act::setTopUi(TransformableNode *value)
+void Act::setTopUi(TransformableNode *value, bool deleteOld)
 {
-    updateUi(topUi, value);
+    updateUi(topUi, value, deleteOld);
     topUi = value;
 }
 
-void Act::setBottomUi(TransformableNode *value)
+void Act::setBottomUi(TransformableNode *value, bool deleteOld)
 {
-    updateUi(bottomUi, value);
+    updateUi(bottomUi, value, deleteOld);
     bottomUi = value;
+}
+
+void Act::setOverlayUi(TransformableNode *value, bool deleteOld)
+{
+    updateUi(overlayUi, value, deleteOld);
+    overlayUi = value;
 }
 
 void Act::setUpNodes()
@@ -210,10 +216,10 @@ bool Act::checkPointOnIt(const sf::Vector2i &point)
     return point.x > 0 && point.x < window.getSize().x && point.y > 0 && point.y < window.getSize().y;
 }
 
-void Act::updateUi(TransformableNode *oldUi, TransformableNode *newUi)
+void Act::updateUi(TransformableNode *oldUi, TransformableNode *newUi, bool deleteOld)
 {
     if (oldUi) {
-        removeChild(oldUi);
+        removeChild(oldUi, deleteOld);
     }
     if (newUi) {
         addChild(newUi);
