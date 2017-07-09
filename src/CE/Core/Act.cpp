@@ -4,16 +4,12 @@
 
 namespace ce {
 
-Act::Act(Stage *stage, Mode contentMode, const sf::Color &bgColor)
-    : Speaker(stage), bgColor(bgColor), contentMode(contentMode),
-      savedMousePosition(sf::Mouse::getPosition(*stage)), window(*stage)
-{
-    addChild(contentLayer);
-}
+Act::Act(Mode contentMode, Stage &stage, const sf::Color &bgColor)
+    : bgColor(bgColor), contentMode(contentMode), savedMousePosition(sf::Mouse::getPosition(stage)), stage(stage) {}
 
 void Act::onMouseMoved(const sf::Vector2i &mousePosition)
 {
-    Node *newSelectedNode = select(mousePosition);
+    std::shared_ptr<Node> newSelectedNode = select(mousePosition);
     if (selectedNode != newSelectedNode) {
         if (selectedNode) {
             selectedNode->onMouseLeft();
@@ -43,7 +39,7 @@ void Act::onMouseLeft()
 {
     if (selectedNode) {
         selectedNode->onMouseLeft();
-        selectedNode = nullptr;
+        selectedNode.reset();
     }
 }
 
@@ -53,7 +49,7 @@ void Act::onLeftMouseButtonPressed()
         if (selectedNode->checkSelectable()) {
             selectedNode->onLeftMouseButtonPressed();
         } else {
-            selectedNode = nullptr;
+            selectedNode.reset();
         }
     }
 }
@@ -64,7 +60,7 @@ void Act::onLeftMouseButtonReleased()
         if (selectedNode->checkSelectable()) {
             selectedNode->onLeftMouseButtonReleased();
         } else {
-            selectedNode = nullptr;
+            selectedNode.reset();
         }
     }
 }
@@ -87,7 +83,7 @@ void Act::onRightMouseButtonReleased()
         if (selectedNode->checkSelectable()) {
             selectedNode->onRightMouseButtonReleased();
         } else {
-            selectedNode = nullptr;
+            selectedNode.reset();
         }
     }
 }
@@ -104,51 +100,54 @@ const sf::Transform &Act::getCombinedTransform()
 
 const sf::Window &Act::getWindow() const
 {
-    return window;
+    return stage;
 }
 
-void Act::setCenter(TransformableNode *value)
+void Act::setCenter(const std::shared_ptr<TransformableNode> &value)
 {
     center = value;
 }
 
-void Act::setContent(TransformableNode *value, bool deleteOld)
+void Act::setContent(const std::shared_ptr<TransformableNode> &value)
 {
+    if (!contentLayer->getParent()) {
+        addChild(contentLayer);
+    }
     if (content) {
-        contentLayer->removeChild(content, deleteOld);
+        contentLayer->removeChild(content);
     }
     content = value;
     contentLayer->addChild(content);
     setUpNodes();
 }
 
-void Act::setLeftUi(TransformableNode *value, bool deleteOld)
+void Act::setLeftUi(const std::shared_ptr<TransformableNode> &value)
 {
-    updateUi(leftUi, value, deleteOld);
+    updateUi(leftUi, value);
     leftUi = value;
 }
 
-void Act::setRightUi(TransformableNode *value, bool deleteOld)
+void Act::setRightUi(const std::shared_ptr<TransformableNode> &value)
 {
-    updateUi(rightUi, value, deleteOld);
+    updateUi(rightUi, value);
     rightUi = value;
 }
 
-void Act::setTopUi(TransformableNode *value, bool deleteOld)
+void Act::setTopUi(const std::shared_ptr<TransformableNode> &value)
 {
-    updateUi(topUi, value, deleteOld);
+    updateUi(topUi, value);
     topUi = value;
 }
 
-void Act::setBottomUi(TransformableNode *value, bool deleteOld)
+void Act::setBottomUi(const std::shared_ptr<TransformableNode> &value)
 {
-    updateUi(bottomUi, value, deleteOld);
+    updateUi(bottomUi, value);
     bottomUi = value;
 }
 
-void Act::setOverlayUi(TransformableNode *value, bool deleteOld)
+void Act::setOverlayUi(const std::shared_ptr<TransformableNode> &value)
 {
-    updateUi(overlayUi, value, deleteOld);
+    updateUi(overlayUi, value);
     overlayUi = value;
 }
 
@@ -161,18 +160,18 @@ void Act::setUpNodes()
     if (leftUi) {
         leftUi->setY(fullTopIndent);
     }
-    float freeWidth = window.getSize().x - fullLeftIndent;
+    float freeWidth = stage.getSize().x - fullLeftIndent;
     if (rightUi) {
-        rightUi->setPos(window.getSize().x - rightUi->getWidth(), fullTopIndent); //rightUi->getWidth()!!! 330 vs 165
+        rightUi->setPos(stage.getSize().x - rightUi->getWidth(), fullTopIndent);
         freeWidth -= rightUi->getWidth();
     }
 
     if (topUi) {
         topUi->setX(fullLeftIndent);
     }
-    float freeHeight = window.getSize().y - fullTopIndent;
+    float freeHeight = stage.getSize().y - fullTopIndent;
     if (bottomUi) {
-        bottomUi->setPos(fullLeftIndent, window.getSize().y - bottomUi->getHeight());
+        bottomUi->setPos(fullLeftIndent, stage.getSize().y - bottomUi->getHeight());
         freeHeight -= bottomUi->getHeight();
     }
 
@@ -194,32 +193,40 @@ void Act::update()
         const unsigned int activeArea = Parameters::get().getIndent() / 2;
         if (savedMousePosition.x < activeArea) {
             offset.x += SCROLL_SPEED * Parameters::get().getK();
-        } else if (savedMousePosition.x > window.getSize().x - activeArea) {
+        } else if (savedMousePosition.x > stage.getSize().x - activeArea) {
             offset.x -= SCROLL_SPEED * Parameters::get().getK();
         }
         if (savedMousePosition.y < activeArea) {
             offset.y += SCROLL_SPEED * Parameters::get().getK();
-        } else if (savedMousePosition.y > window.getSize().y - activeArea) {
+        } else if (savedMousePosition.y > stage.getSize().y - activeArea) {
             offset.y -= SCROLL_SPEED * Parameters::get().getK();
         }
         contentLayer->move(offset.x, offset.y);
     } else if (contentMode == Mode::CENTERED_ON_NODE) {
         sf::Vector2f offset = center->getCombinedTransform().transformPoint(0, 0);
-        contentLayer->move(window.getSize().x / 2 - offset.x, window.getSize().y / 2 - offset.y);
+        contentLayer->move(stage.getSize().x / 2 - offset.x, stage.getSize().y / 2 - offset.y);
     }
 
-    drawToTarget(window);
+    drawToTarget(stage);
 }
 
 bool Act::checkPointOnIt(const sf::Vector2i &point)
 {
-    return point.x > 0 && point.x < window.getSize().x && point.y > 0 && point.y < window.getSize().y;
+    return point.x > 0 && point.x < stage.getSize().x && point.y > 0 && point.y < stage.getSize().y;
 }
 
-void Act::updateUi(TransformableNode *oldUi, TransformableNode *newUi, bool deleteOld)
+void Act::declareEvent(const sf::String &name)
 {
+    stage.onEvent(castSharedFromThis<Act>(), name);
+}
+
+void Act::updateUi(const std::shared_ptr<TransformableNode> &oldUi, const std::shared_ptr<TransformableNode> &newUi)
+{
+    if (!contentLayer->getParent()) {
+        addChild(contentLayer);
+    }
     if (oldUi) {
-        removeChild(oldUi, deleteOld);
+        removeChild(oldUi);
     }
     if (newUi) {
         addChild(newUi);

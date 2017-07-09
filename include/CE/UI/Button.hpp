@@ -10,7 +10,10 @@ namespace ce {
 class Button : public RectangleNode, public Speaker
 {
 public:
-    Button(Listener *listener, const sf::String &string = "", const sf::Vector2f &size = sf::Vector2f(165, 40));
+    Button(const std::shared_ptr<Listener> &listener, const sf::String &string = "",
+           const sf::Vector2f &size = sf::Vector2f(165, 40));
+
+    void onCreated() override;
 
     void onMouseEntered() override;
     void onMouseLeft() override;
@@ -29,7 +32,7 @@ private:
     enum class State { DEFAULT, MOUSE_OVER, MOUSE_PRESSED, DISABLED };
     void updateSize();
 
-    Text *text;
+    std::shared_ptr<Text> text = std::make_shared<Text>("", 18, sf::Color::White);
     sf::Vector2f size;
     State state = State::DEFAULT;
 

@@ -39,7 +39,7 @@ public:
     void moveY(float offset);
     virtual void move(float offsetX, float offsetY) = 0;
 
-    void removeFromParent(bool toDelete = false);
+    void removeFromParent();
 
 protected:
     bool checkPointOnIt(const sf::Vector2i &point) override;

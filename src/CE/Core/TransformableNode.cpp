@@ -97,9 +97,9 @@ void TransformableNode::moveY(float offset)
     move(0, offset);
 }
 
-void TransformableNode::removeFromParent(bool toDelete)
+void TransformableNode::removeFromParent()
 {
-    getParent()->removeChild(this, toDelete);
+    getParent()->removeChild(castSharedFromThis<TransformableNode>());
 }
 
 bool TransformableNode::checkPointOnIt(const sf::Vector2i &point)
@@ -118,7 +118,7 @@ sf::Vector2f TransformableNode::translatePointToLocalCoordinates(const sf::Vecto
 void TransformableNode::makeTransformed()
 {
     isTransformed = true;
-    for (auto *child : children) {
+    for (auto &child : children) {
         child->makeTransformed();
     }
 }

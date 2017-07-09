@@ -8,7 +8,7 @@ MimicNode::MimicNode(bool isSelectable) : TransformableNode(isSelectable) {}
 float MimicNode::getWidth()
 {
     float width = 0;
-    for (auto *child : children) {
+    for (auto &child : children) {
         float nextWidth = child->getX() - child->getOriginX() + child->getWidth() * child->getScale();
         if (nextWidth > width) {
             width = nextWidth;
@@ -20,7 +20,7 @@ float MimicNode::getWidth()
 float MimicNode::getHeight()
 {
     float height = 0;
-    for (auto *child : children) {
+    for (auto &child : children) {
         float nextHeight = child->getY() - child->getOriginY() + child->getHeight() * child->getScale();
         if (nextHeight > height) {
             height = nextHeight;

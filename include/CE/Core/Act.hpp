@@ -1,19 +1,18 @@
 #ifndef CE_ACT_HPP
 #define CE_ACT_HPP
 
-#include <CE/Event/Speaker.hpp>
 #include <CE/Core/MimicNode.hpp>
 #include <CE/Core/Stage.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace ce {
 
-class Act : public Node, public Speaker
+class Act : public Node
 {
 public:
     enum class Mode { STATIC, MOVABLE_BY_MOUSE, CENTERED_ON_NODE };
 
-    Act(Stage *stage, Mode contentMode, const sf::Color &bgColor = sf::Color::Black);
+    Act(Mode contentMode, Stage &stage, const sf::Color &bgColor = sf::Color::Black);
 
     void onMouseMoved(const sf::Vector2i &mousePosition) override;
     void onMouseLeft() override;
@@ -27,13 +26,13 @@ public:
     const sf::Transform &getCombinedTransform() override;
     const sf::Window &getWindow() const override;
 
-    void setCenter(TransformableNode *value);
-    void setContent(TransformableNode *value, bool deleteOld = false);
-    void setLeftUi(TransformableNode *value, bool deleteOld = false);
-    void setRightUi(TransformableNode *value, bool deleteOld = false);
-    void setTopUi(TransformableNode *value, bool deleteOld = false);
-    void setBottomUi(TransformableNode *value, bool deleteOld = false);
-    void setOverlayUi(TransformableNode *value, bool deleteOld = false);
+    void setCenter(const std::shared_ptr<TransformableNode> &value);
+    void setContent(const std::shared_ptr<TransformableNode> &value);
+    void setLeftUi(const std::shared_ptr<TransformableNode> &value);
+    void setRightUi(const std::shared_ptr<TransformableNode> &value);
+    void setTopUi(const std::shared_ptr<TransformableNode> &value);
+    void setBottomUi(const std::shared_ptr<TransformableNode> &value);
+    void setOverlayUi(const std::shared_ptr<TransformableNode> &value);
 
     virtual void setUpNodes();
     void update() override;
@@ -42,6 +41,7 @@ protected:
     sf::Color bgColor;
 
     bool checkPointOnIt(const sf::Vector2i &point) override;
+    void declareEvent(const sf::String &name);
 
 private:
     static constexpr unsigned int SCROLL_SPEED = 5;
@@ -51,20 +51,20 @@ private:
     sf::Vector2i savedMousePosition;
     bool isRightMouseButtonPressed = false;
     bool isMouseMovedWithRightButton = false;
-    sf::RenderWindow &window;
+    Stage &stage;
 
-    Node *selectedNode = nullptr;
-    MimicNode *contentLayer = new MimicNode();
+    std::shared_ptr<Node> selectedNode;
+    std::shared_ptr<MimicNode> contentLayer = std::make_shared<MimicNode>();
 
-    TransformableNode *center = nullptr;
-    TransformableNode *content = nullptr;
-    TransformableNode *leftUi = nullptr;
-    TransformableNode *rightUi = nullptr;
-    TransformableNode *topUi = nullptr;
-    TransformableNode *bottomUi = nullptr;
-    TransformableNode *overlayUi = nullptr;
+    std::shared_ptr<TransformableNode> center;
+    std::shared_ptr<TransformableNode> content;
+    std::shared_ptr<TransformableNode> leftUi;
+    std::shared_ptr<TransformableNode> rightUi;
+    std::shared_ptr<TransformableNode> topUi;
+    std::shared_ptr<TransformableNode> bottomUi;
+    std::shared_ptr<TransformableNode> overlayUi;
 
-    void updateUi(TransformableNode *oldUi, TransformableNode *newUi, bool deleteOld);
+    void updateUi(const std::shared_ptr<TransformableNode> &oldUi, const std::shared_ptr<TransformableNode> &newUi);
     virtual void resizeUi() {}
 };
 

@@ -5,13 +5,6 @@ namespace ce {
 
 Node::Node(bool isSelectable) : isSelectable(isSelectable) {}
 
-Node::~Node()
-{
-    for (auto *child : children) {
-        delete child;
-    }
-}
-
 bool Node::checkSelectable() const
 {
     return isSelectable;
@@ -25,36 +18,36 @@ void Node::setSelectable(bool value)
     }
 }
 
-Node *Node::getParent() const
+std::shared_ptr<Node> Node::getParent() const
 {
-    return parent;
+    return parent.lock();
 }
 
 const sf::Window &Node::getWindow() const
 {
-    return parent->getWindow();
+    return parent.lock()->getWindow();
 }
 
 void Node::update()
 {
-    for (auto *child : children) {
+    for (auto &child : children) {
         child->update();
     }
     onUpdated();
 }
 
-void Node::addChild(TransformableNode *child)
+void Node::addChild(const std::shared_ptr<TransformableNode> &child)
 {
-    child->setParent(this);
+    child->setParent(sharedFromThis());
     children.push_back(child);
     child->onAdded();
 }
 
-void Node::removeChild(TransformableNode *child, bool toDelete)
+void Node::removeChild(const std::shared_ptr<TransformableNode> &child)
 {
     auto it = std::find(children.begin(), children.end(), child);
     if (it != children.end()) {
-        child->dispose(toDelete);
+        child->setParent(nullptr);
         children.erase(it);
     }
 }
@@ -65,18 +58,17 @@ void Node::removeChildren(bool toDelete, unsigned long firstIndex, long lastInde
     const auto end = lastIndex == -1 || lastIndex > children.size()
             ? children.end()
             : children.begin() + lastIndex;
-    std::for_each(begin, end, [this, toDelete](Node *child) {
-       child->dispose(toDelete);
+    std::for_each(begin, end, [this, toDelete](const std::shared_ptr<Node> &child) {
+        child->setParent(nullptr);
     });
     children.erase(begin, end);
 }
 
-Node *Node::select(const sf::Vector2i &mousePosition)
+std::shared_ptr<Node> Node::select(const sf::Vector2i &mousePosition)
 {
-    Node *selectedChild = nullptr;
-    auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](Node *child) -> bool {
-        return child->checkPointOnIt(mousePosition);
-    });
+    std::shared_ptr<Node> selectedChild;
+    auto it = std::find_if(children.rbegin(), children.rend(), [mousePosition](const std::shared_ptr<Node> &child)
+        -> bool { return child->checkPointOnIt(mousePosition); });
     if (it != children.rend()) {
         selectedChild = (*it)->select(mousePosition);
     }
@@ -84,31 +76,22 @@ Node *Node::select(const sf::Vector2i &mousePosition)
         return selectedChild;
     }
     if (checkSelectable()) {
-        return this;
+        return sharedFromThis();
     }
     return nullptr;
 }
 
 void Node::drawToTarget(sf::RenderTarget &target)
 {
-    for (auto *child : children) {
+    for (auto &child : children) {
         child->drawToTarget(target);
     }
 }
 
-void Node::setParent(Node *value)
+void Node::setParent(const std::shared_ptr<Node> &value)
 {
     parent = value;
     makeTransformed();
-}
-
-void Node::dispose(bool toDelete)
-{
-    if (toDelete) {
-        delete this;
-    } else {
-        setParent(nullptr);
-    }
 }
 
 }

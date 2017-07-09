@@ -33,7 +33,9 @@ set(SOURCE_FILES
         include/CE/UI/Text.hpp
         include/CE/constant.hpp
         src/CE/Core/TransformableNode.cpp
-        include/CE/Core/TransformableNode.hpp)
+        include/CE/Core/TransformableNode.hpp
+        include/CE/Utility/StdEnableSharedFromThisWrapper.hpp
+        include/CE/Utility/EnableSharedFromThis.hpp)
 
 add_library(county STATIC ${SOURCE_FILES})
 

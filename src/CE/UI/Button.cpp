@@ -4,11 +4,15 @@
 
 namespace ce {
 
-Button::Button(Listener *listener, const sf::String &string, const sf::Vector2f &size)
+Button::Button(const std::shared_ptr<Listener> &listener, const sf::String &string, const sf::Vector2f &size)
     : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(), sf::Color(0x333333FF), true),
-      Speaker(listener), text(new Text("", Text::CHRACTER_SIZE, sf::Color::White)), size(size)
+      Speaker(listener), size(size)
 {
     setString(string);
+}
+
+void Button::onCreated()
+{
     addChild(text);
 }
 

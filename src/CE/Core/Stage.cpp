@@ -12,22 +12,12 @@ Stage::Stage(const sf::VideoMode &mode, const sf::String &title)
     setView(view);
 }
 
-Stage::~Stage()
+void Stage::setAct(const std::shared_ptr<Act> &value)
 {
-    if (act) {
-        delete act;
-    }
-}
-
-void Stage::setAct(Act *value, bool deleteOld)
-{
-    if (deleteOld && act) {
-        delete act;
-    }
     act = value;
 }
 
-const Act *Stage::getAct() const
+const std::shared_ptr<Act> &Stage::getAct() const
 {
     return act;
 }

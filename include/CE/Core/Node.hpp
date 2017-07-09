@@ -1,6 +1,7 @@
 #ifndef CE_NODE_HPP
 #define CE_NODE_HPP
 
+#include <CE/Utility/EnableSharedFromThis.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Window.hpp>
@@ -9,11 +10,10 @@ namespace ce {
 
 class TransformableNode;
 
-class Node
+class Node : public EnableSharedFromThis<Node>
 {
 public:
     Node(bool isSelectable = false);
-    virtual ~Node();
 
     virtual void onMouseEntered() {}
     virtual void onMouseMoved(const sf::Vector2i &mousePosition) {}
@@ -26,17 +26,17 @@ public:
     void setSelectable(bool value);
 
     virtual const sf::Transform &getCombinedTransform() = 0;
-    Node *getParent() const;
+    std::shared_ptr<Node> getParent() const;
     virtual const sf::Window &getWindow() const;
 
-    void addChild(TransformableNode *child);
-    void removeChild(TransformableNode *child, bool toDelete = false);
+    void addChild(const std::shared_ptr<TransformableNode> &child);
+    void removeChild(const std::shared_ptr<TransformableNode> &child);
     void removeChildren(bool toDelete = false, unsigned long firstIndex = 0, long lastIndex = -1);
 
 protected:
-    std::vector<TransformableNode *> children;
+    std::vector<std::shared_ptr<TransformableNode> > children;
 
-    Node *select(const sf::Vector2i &mousePosition);
+    std::shared_ptr<Node> select(const sf::Vector2i &mousePosition);
     virtual void update();
     virtual bool checkPointOnIt(const sf::Vector2i &point) = 0;
     virtual void makeTransformed() {}
@@ -44,13 +44,12 @@ protected:
 
 private:
     bool isSelectable;
-    Node *parent = nullptr;
+    std::weak_ptr<Node> parent;
 
     virtual void onAdded() {}
     virtual void onUpdated() {}
 
-    void setParent(Node *value);
-    void dispose(bool toDelete);
+    void setParent(const std::shared_ptr<Node> &value);
 };
 
 }

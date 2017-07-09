@@ -10,8 +10,7 @@ class Speaker;
 class Listener
 {
 public:
-    virtual ~Listener() {}
-    virtual void onEvent(Speaker *speaker, const sf::String &name) = 0;
+    virtual void onEvent(const std::shared_ptr<Speaker> &speaker, const sf::String &name) = 0;
 };
 
 }
