@@ -38,6 +38,9 @@ void Node::update()
 
 void Node::addChild(const std::shared_ptr<TransformableNode> &child)
 {
+    if (child->getParent()) {
+        child->removeFromParent();
+    }
     child->setParent(sharedFromThis());
     children.push_back(child);
     child->onAdded();
