@@ -1,19 +1,19 @@
 #include <CE/UI/Text.hpp>
-#include <CE/UI/Parameters.hpp>
+#include <CE/UI/factor.hpp>
 #include <CE/constant.hpp>
 #include <cmath>
 
 namespace ce {
+
+sf::Font Text::font;
 
 void Text::loadFont(const std::string &filename)
 {
     font.loadFromFile(filename);
 }
 
-sf::Font Text::font = sf::Font();
-
-Text::Text(const sf::String &string, sf::Uint32 characterSize, const sf::Color &color)
-    : characterSize(characterSize), text(sf::Text(string, font, characterSize * Parameters::get().getK()))
+Text::Text(const sf::String &string, unsigned int characterSize, const sf::Color &color)
+    : characterSize(characterSize), text(sf::Text(string, font, characterSize * getFactor()))
 {
     text.setFillColor(color);
 }
@@ -87,7 +87,7 @@ void Text::move(float offsetX, float offsetY)
 
 void Text::resize()
 {
-    text.setCharacterSize(characterSize * Parameters::get().getK());
+    text.setCharacterSize(characterSize * getFactor());
 }
 
 const sf::Transformable &Text::getTransformable() const

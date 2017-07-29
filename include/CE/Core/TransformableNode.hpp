@@ -8,7 +8,7 @@ namespace ce {
 class TransformableNode : public Node
 {
 public:
-    TransformableNode(bool isSelectable = false);
+    explicit TransformableNode(bool isSelectable = false);
 
     virtual float getWidth() = 0;
     virtual float getHeight() = 0;
@@ -30,7 +30,7 @@ public:
     void setY(float value);
     const sf::Vector2f &getPos() const;
 
-    virtual const sf::Transform &getCombinedTransform() override;
+    const sf::Transform &getCombinedTransform() override;
 
     virtual void setOrigin(float x, float y) = 0;
     virtual void setPos(float x, float y) = 0;

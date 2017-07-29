@@ -1,11 +1,11 @@
 #include <CE/UI/Button.hpp>
-#include <CE/UI/Parameters.hpp>
+#include <CE/UI/factor.hpp>
 #include <CE/constant.hpp>
 
 namespace ce {
 
 Button::Button(const std::shared_ptr<Listener> &listener, const sf::String &string, const sf::Vector2f &size)
-    : RectangleNode(size.x * Parameters::get().getK(), size.y * Parameters::get().getK(), sf::Color(0x333333FF), true),
+    : RectangleNode(size.x * getFactor(), size.y * getFactor(), sf::Color(0x333333FF), true),
       Speaker(listener), size(size)
 {
     setString(string);
@@ -81,7 +81,6 @@ void Button::resize()
 
 void Button::setState(State state)
 {
-    this->state = state;
     if (state == State::DEFAULT) {
         shape.setFillColor(sf::Color(0x333333FF));
     } else if (state == State::MOUSE_OVER || state == State::DISABLED) {
@@ -93,7 +92,7 @@ void Button::setState(State state)
 
 void Button::updateSize()
 {
-    RectangleNode::setSize(size.x * Parameters::get().getK(), size.y * Parameters::get().getK());
+    RectangleNode::setSize(size.x * getFactor(), size.y * getFactor());
     text->setPos(getHalfX(), getHalfY());
 }
 

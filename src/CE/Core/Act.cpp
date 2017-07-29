@@ -1,5 +1,6 @@
 #include <CE/Core/Act.hpp>
-#include <CE/UI/Parameters.hpp>
+#include <CE/UI/factor.hpp>
+#include <CE/constant.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 namespace ce {
@@ -180,7 +181,7 @@ void Act::setUpNodes()
         contentLayer->setOrigin(contentLayer->getHalfX(), contentLayer->getHalfY());
         contentLayer->setPos(fullLeftIndent + freeWidth / 2, fullTopIndent + freeHeight / 2);
     } else {
-        contentLayer->setScale(Parameters::get().getK());
+        contentLayer->setScale(getFactor());
     }
 }
 
@@ -190,16 +191,16 @@ void Act::update()
 
     if (contentMode == Mode::MOVABLE_BY_MOUSE) {
         sf::Vector2i offset;
-        const unsigned int activeArea = Parameters::get().getIndent() / 2;
+        const unsigned int activeArea = INDENT * getFactor() / 2;
         if (savedMousePosition.x < activeArea) {
-            offset.x += SCROLL_SPEED * Parameters::get().getK();
+            offset.x += SCROLL_SPEED * getFactor();
         } else if (savedMousePosition.x > stage.getSize().x - activeArea) {
-            offset.x -= SCROLL_SPEED * Parameters::get().getK();
+            offset.x -= SCROLL_SPEED * getFactor();
         }
         if (savedMousePosition.y < activeArea) {
-            offset.y += SCROLL_SPEED * Parameters::get().getK();
+            offset.y += SCROLL_SPEED * getFactor();
         } else if (savedMousePosition.y > stage.getSize().y - activeArea) {
-            offset.y -= SCROLL_SPEED * Parameters::get().getK();
+            offset.y -= SCROLL_SPEED * getFactor();
         }
         contentLayer->move(offset.x, offset.y);
     } else if (contentMode == Mode::CENTERED_ON_NODE) {

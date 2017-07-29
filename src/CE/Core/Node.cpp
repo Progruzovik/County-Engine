@@ -55,13 +55,13 @@ void Node::removeChild(const std::shared_ptr<TransformableNode> &child)
     }
 }
 
-void Node::removeChildren(bool toDelete, unsigned long firstIndex, long lastIndex)
+void Node::removeChildren(unsigned long firstIndex, long lastIndex)
 {
     const auto begin = children.begin() + firstIndex;
     const auto end = lastIndex == -1 || lastIndex > children.size()
             ? children.end()
             : children.begin() + lastIndex;
-    std::for_each(begin, end, [this, toDelete](const std::shared_ptr<Node> &child) {
+    std::for_each(begin, end, [this](const std::shared_ptr<Node> &child) {
         child->setParent(nullptr);
     });
     children.erase(begin, end);

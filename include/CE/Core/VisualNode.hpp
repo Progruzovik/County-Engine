@@ -8,7 +8,7 @@ namespace ce {
 class VisualNode : public TransformableNode
 {
 public:
-    VisualNode(bool isSelectable = false);
+    explicit VisualNode(bool isSelectable = false);
 
     virtual void setAlpha(float value) = 0;
     void drawToTarget(sf::RenderTarget &target) override;

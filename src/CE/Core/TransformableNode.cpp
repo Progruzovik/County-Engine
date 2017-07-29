@@ -112,7 +112,7 @@ sf::Vector2f TransformableNode::translatePointToLocalCoordinates(const sf::Vecto
 {
     const sf::FloatRect combinedRect = getParent()->getCombinedTransform().transformRect(getRect());
     const float combinedScale = combinedRect.width / getWidth();
-    return sf::Vector2f((point.x - combinedRect.left) / combinedScale, (point.y - combinedRect.top) / combinedScale);
+    return { (point.x - combinedRect.left) / combinedScale, (point.y - combinedRect.top) / combinedScale };
 }
 
 void TransformableNode::makeTransformed()

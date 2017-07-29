@@ -9,7 +9,7 @@ namespace ce {
 class MimicNode : public TransformableNode
 {
 public:
-    MimicNode(bool isSelectable = false);
+    explicit MimicNode(bool isSelectable = false);
 
     float getWidth() override;
     float getHeight() override;

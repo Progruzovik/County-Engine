@@ -13,7 +13,7 @@ class TransformableNode;
 class Node : public EnableSharedFromThis<Node>
 {
 public:
-    Node(bool isSelectable = false);
+    explicit Node(bool isSelectable = false);
 
     virtual void onMouseEntered() {}
     virtual void onMouseMoved(const sf::Vector2i &mousePosition) {}
@@ -31,7 +31,7 @@ public:
 
     void addChild(const std::shared_ptr<TransformableNode> &child);
     void removeChild(const std::shared_ptr<TransformableNode> &child);
-    void removeChildren(bool toDelete = false, unsigned long firstIndex = 0, long lastIndex = -1);
+    void removeChildren(unsigned long firstIndex = 0, long lastIndex = -1);
 
 protected:
     std::vector<std::shared_ptr<TransformableNode> > children;

@@ -9,11 +9,9 @@ namespace ce {
 class Text : public VisualNode
 {
 public:
-    static constexpr unsigned int CHRACTER_SIZE = 18;
     static void loadFont(const std::string &filename);
-
-    Text(const sf::String &string = "", unsigned int characterSize = CHRACTER_SIZE,
-         const sf::Color &color = sf::Color::Black);
+    explicit Text(const sf::String &string = "", unsigned int characterSize = CHARACTER_SIZE,
+                  const sf::Color &color = sf::Color::Black);
 
     const sf::String &getString() const;
     void setString(const sf::String &value);
@@ -33,9 +31,10 @@ public:
     virtual void resize();
 
 private:
+    static constexpr unsigned int CHARACTER_SIZE = 18;
     static sf::Font font;
 
-    unsigned int characterSize;
+    const unsigned int characterSize;
     sf::Text text;
 
     const sf::Transformable &getTransformable() const override;

@@ -9,7 +9,7 @@ namespace ce {
 class CircleNode : public VisualNode
 {
 public:
-    CircleNode(float radius, const sf::Color &color = sf::Color::White, bool isSelectable = false);
+    explicit CircleNode(float radius, const sf::Color &color = sf::Color::White, bool isSelectable = false);
 
     void setAlpha(float value) override;
     float getWidth() override;

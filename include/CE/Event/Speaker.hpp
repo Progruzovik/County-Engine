@@ -9,7 +9,7 @@ namespace ce {
 class Speaker : public EnableSharedFromThis<Speaker>
 {
 public:
-    Speaker(const std::shared_ptr<Listener> &listener = nullptr);
+    explicit Speaker(const std::shared_ptr<Listener> &listener = nullptr);
 
     void setListener(const std::shared_ptr<Listener> &value);
 

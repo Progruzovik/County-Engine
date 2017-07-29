@@ -10,8 +10,8 @@ namespace ce {
 class Button : public RectangleNode, public Speaker
 {
 public:
-    Button(const std::shared_ptr<Listener> &listener, const sf::String &string = "",
-           const sf::Vector2f &size = sf::Vector2f(165, 40));
+    explicit Button(const std::shared_ptr<Listener> &listener, const sf::String &string = "",
+                    const sf::Vector2f &size = sf::Vector2f(165, 40));
 
     void onCreated() override;
 
@@ -34,7 +34,6 @@ private:
 
     std::shared_ptr<Text> text = std::make_shared<Text>("", 18, sf::Color::White);
     sf::Vector2f size;
-    State state = State::DEFAULT;
 
     void setState(State state);
 };

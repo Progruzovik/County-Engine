@@ -25,8 +25,6 @@ set(SOURCE_FILES
         include/CE/Event/Speaker.hpp
         src/CE/UI/Button.cpp
         include/CE/UI/Button.hpp
-        src/CE/UI/Parameters.cpp
-        include/CE/UI/Parameters.hpp
         src/CE/UI/ProgressBar.cpp
         include/CE/UI/ProgressBar.hpp
         src/CE/UI/Text.cpp
@@ -35,7 +33,9 @@ set(SOURCE_FILES
         src/CE/Core/TransformableNode.cpp
         include/CE/Core/TransformableNode.hpp
         include/CE/Utility/StdEnableSharedFromThisWrapper.hpp
-        include/CE/Utility/EnableSharedFromThis.hpp)
+        include/CE/Utility/EnableSharedFromThis.hpp
+        include/CE/UI/factor.hpp
+        src/CE/UI/factor.cpp)
 
 add_library(county STATIC ${SOURCE_FILES})
 

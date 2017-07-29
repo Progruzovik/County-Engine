@@ -1,6 +1,6 @@
 #include <CE/Core/Stage.hpp>
 #include <CE/Core/Act.hpp>
-#include <CE/UI/Parameters.hpp>
+#include <CE/UI/factor.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace ce {
@@ -33,10 +33,10 @@ void Stage::update()
 {
     onUpdated();
 
-    sf::Event event;
+    auto event = sf::Event();
     while (pollEvent(event)) {
         if (event.type == sf::Event::Resized) {
-            Parameters::get().update(event.size.width, event.size.height);
+            updateFactor(event.size.width, event.size.height);
             view.reset(sf::FloatRect(0, 0, event.size.width, event.size.height));
             setView(view);
             act->setUpNodes();
