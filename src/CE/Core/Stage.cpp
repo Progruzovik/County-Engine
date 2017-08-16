@@ -5,8 +5,8 @@
 
 namespace ce {
 
-Stage::Stage(const sf::VideoMode &mode, const sf::String &title)
-    : sf::RenderWindow(mode, title), view(sf::FloatRect(0, 0, mode.width, mode.height))
+Stage::Stage(const sf::VideoMode &mode, const sf::String &title, sf::Uint32 style)
+    : sf::RenderWindow(mode, title, style), view(sf::FloatRect(0, 0, mode.width, mode.height))
 {
     setVerticalSyncEnabled(true);
     setView(view);

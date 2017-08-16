@@ -11,7 +11,7 @@ class Act;
 class Stage : public sf::RenderWindow
 {
 public:
-    Stage(const sf::VideoMode &mode, const sf::String &title);
+    Stage(const sf::VideoMode &mode, const sf::String &title, sf::Uint32 style = sf::Style::Default);
 
     virtual void onEvent(const std::shared_ptr<Act> &act, const sf::String &name) {}
     void setAct(const std::shared_ptr<Act> &value);
