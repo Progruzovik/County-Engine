@@ -1,5 +1,5 @@
 # County Engine
-Light 2D game engine based on SFML.
+Prototype of 2D game engine based on SFML.
 
 It provides:
 * Main game loop
