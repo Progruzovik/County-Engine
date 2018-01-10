@@ -2,6 +2,7 @@
 #define CE_RECEIVER_HPP
 
 #include <SFML/System/String.hpp>
+#include <memory>
 
 namespace ce {
 
