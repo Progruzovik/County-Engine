@@ -1,5 +1,4 @@
 #include <CE/UI/Text.hpp>
-#include <CE/UI/factor.hpp>
 #include <CE/constant.hpp>
 #include <cmath>
 
@@ -13,7 +12,7 @@ void Text::loadFont(const std::string &filename)
 }
 
 Text::Text(const sf::String &string, unsigned int characterSize, const sf::Color &color)
-    : characterSize(characterSize), text(sf::Text(string, font, characterSize * getFactor()))
+    : characterSize(characterSize), text(sf::Text(string, font, characterSize))
 {
     text.setFillColor(color);
 }
@@ -87,7 +86,7 @@ void Text::move(float offsetX, float offsetY)
 
 void Text::resize()
 {
-    text.setCharacterSize(characterSize * getFactor());
+    text.setCharacterSize(characterSize);
 }
 
 const sf::Transformable &Text::getTransformable() const
