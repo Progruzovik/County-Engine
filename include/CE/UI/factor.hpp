@@ -4,7 +4,6 @@
 namespace ce {
 
 unsigned int getFactor();
-
 void updateFactor(unsigned int width, unsigned int height);
 
 }

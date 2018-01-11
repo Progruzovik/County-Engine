@@ -5,9 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/modules)
 
 find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
-find_package(SDL2 REQUIRED)
 
-include_directories(include ${SFML_INCLUDE_DIR} ${SDL2_INCLUDE_DIRS})
+include_directories(include ${SFML_INCLUDE_DIR})
 
 set(SOURCE_FILES
         src/CE/Core/Act.cpp
@@ -39,9 +38,7 @@ set(SOURCE_FILES
         src/CE/Core/TransformableNode.cpp
         include/CE/Core/TransformableNode.hpp
         include/CE/Utility/StdEnableSharedFromThisWrapper.hpp
-        include/CE/Utility/EnableSharedFromThis.hpp
-        include/CE/UI/factor.hpp
-        src/CE/UI/factor.cpp)
+        include/CE/Utility/EnableSharedFromThis.hpp)
 add_library(county STATIC ${SOURCE_FILES})
 
-target_link_libraries(county ${SFML_LIBRARIES} ${SDL2})
+target_link_libraries(county ${SFML_LIBRARIES})
